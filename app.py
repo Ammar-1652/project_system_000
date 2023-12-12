@@ -170,8 +170,7 @@ def courses_for_student():
 
     if student_id is not None:
         student=get_student_by_id(student_id)
-        courses=student.courses
-        return render_template("courses_for_student.html", student=student, courses=courses)
+        return render_template("courses_for_student.html", student=student)
 
     # Redirect to login if user is not logged in
     return redirect(url_for("log_in"))
