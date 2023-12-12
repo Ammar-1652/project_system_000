@@ -32,7 +32,7 @@ def log_in():
         student = Student.query.filter_by(email=email, password=password).first()
         professor = Professor.query.filter_by(email=email, password=password).first()
         assistant = Assistant.query.filter_by(email=email, password=password).first()
-        admin = Admin.query.filter_by(username=email, password=password).first()
+        admin = Admin.query.filter_by(email=email, password=password).first()
 
         if student :
             session["user_id"] = student.id
@@ -45,9 +45,9 @@ def log_in():
             # Redirect to assistant dashboard
             return redirect("/assistant_dashboard")
 
-        elif admin and admin.isVerified:
+        elif admin :
             # Redirect to admin dashboard
-            return redirect("/admin_dashboard")
+            return redirect("/dashboard")
 
         else:
             return "Invalid email or password"
