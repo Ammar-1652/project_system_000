@@ -169,10 +169,9 @@ def courses_for_student():
     student_id = session.get("user_id")
 
     if student_id is not None:
-        # Replace the following lines with your actual data retrieval logic
-        student = Student.query.get(student_id)  # Replace with proper database query
-        student_courses = student.courses  # Assuming the relationship is defined correctly
-        return render_template("courses_for_student.html", student=student, courses=student_courses)
+        student=get_student_by_id(student_id)
+        courses=student.courses
+        return render_template("courses_for_student.html", student=student, courses=courses)
 
     # Redirect to login if user is not logged in
     return redirect(url_for("log_in"))
