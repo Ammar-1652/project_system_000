@@ -166,10 +166,7 @@ def student_dashboard():
 
 @app.route("/courses_for_student")
 def courses_for_student():
-    
-    # Your code inside the application context
     student_id = session.get("user_id")
-
     if student_id is not None:
         student = get_student_by_id(student_id)
         

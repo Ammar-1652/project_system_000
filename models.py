@@ -13,8 +13,8 @@ class Student(db.Model):
     first_name = db.Column(db.String(50))
     middle_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
-    contact_number = db.Column(db.String(15))
-    national_id = db.Column(db.String(20))
+    contact_number = db.Column(db.String(15),unique=True)
+    national_id = db.Column(db.String(20),unique=True)
     email = db.Column(db.String(100), unique=True)
     date_of_birth = db.Column(db.String(10))
     gender = db.Column(db.String(10))
@@ -27,8 +27,8 @@ class Professor(db.Model):
     first_name = db.Column(db.String(50))
     middle_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
-    contact_number = db.Column(db.String(15))
-    national_id = db.Column(db.String(20))
+    contact_number = db.Column(db.String(15),unique=True)
+    national_id = db.Column(db.String(20),unique=True)
     email = db.Column(db.String(100), unique=True)
     date_of_birth = db.Column(db.String(10))
     gender = db.Column(db.String(10))
@@ -40,8 +40,8 @@ class Assistant(db.Model):
     first_name = db.Column(db.String(50))
     middle_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
-    contact_number = db.Column(db.String(15))
-    national_id = db.Column(db.String(20))
+    contact_number = db.Column(db.String(15),unique=True)
+    national_id = db.Column(db.String(20),unique=True)
     email = db.Column(db.String(100), unique=True)
     date_of_birth = db.Column(db.String(10))
     gender = db.Column(db.String(10))
@@ -72,32 +72,32 @@ def get_students_by_first_name(first_name_):
     return students
 
 def get_students_by_middle_name(middle_name_):
-    with app.app_context():
+    with current_app.app_context():
         students=Student.query.filter_by(middle_name=middle_name_).all()
     return students
 
 def get_students_by_last_name(last_name_):
-    with app.app_context():
+    with current_app.app_context():
         students=Student.query.filter_by(last_name=last_name_).all()
     return students
 
 def get_student_by_contact_number(contact_number_):
-    with app.app_context():
+    with current_app.app_context():
         student=Student.query.filter_by(contact_number=contact_number_).first()
     return student
 
 def get_student_by_national_id(national_id_):
-    with app.app_context():
+    with current_app.app_context():
         student=Student.query.filter_by(national_id_=national_id_).first()
     return student    
 
 def get_student_by_email(email_):
-    with app.app_context():
+    with current_app.app_context():
         student=Student.query.filter_by(email=email_).first()
     return student
 
 def get_students_by_date_of_birth(date_of_birth_):
-    with app.app_context():
+    with current_app.app_context():
         student=Student.query.filter_by(date_of_birth=date_of_birth_).first()
     return student
 #====================================================================
@@ -105,41 +105,41 @@ def get_students_by_date_of_birth(date_of_birth_):
 
 #==================Professor====================================
 def get_prof_by_id(id_):
-    with app.app_context():
+    with current_app.app_context():
         prof=Professor.query.filter_by(id=id).first()
     return prof
 def get_profs_by_first_name(first_name_):
-    with app.app_context():
+    with current_app.app_context():
         profs=Professor.query.filter_by(first_name=first_name_).all()
     return profs
 
 def get_profs_by_middle_name(middle_name_):
-    with app.app_context():
+    with current_app.app_context():
         profs=Professor.query.filter_by(middle_name=middle_name_).all()
     return profs
 
 def get_profs_by_last_name(last_name_):
-    with app.app_context():
+    with current_app.app_context():
         profs=Professor.query.filter_by(last_name=last_name_).all()
     return profs
 
 def get_prof_by_contact_number(contact_number_):
-    with app.app_context():
+    with current_app.app_context():
         prof=Professor.query.filter_by(contact_number=contact_number_).first()
     return prof
 
 def get_prof_by_national_id(national_id_):
-    with app.app_context():
+    with current_app.app_context():
         prof=Professor.query.filter_by(national_id_=national_id_).first()
     return prof    
 
 def get_prof_by_email(email_):
-    with app.app_context():
+    with current_app.app_context():
         prof=Professor.query.filter_by(email=email_).first()
     return prof
 
 def get_profs_by_date_of_birth(date_of_birth_):
-    with app.app_context():
+    with current_app.app_context():
         prof=Professor.query.filter_by(date_of_birth=date_of_birth_).first()
     return prof
 
@@ -149,41 +149,41 @@ def get_profs_by_date_of_birth(date_of_birth_):
 #=======================Assistant=====================================
 
 def get_asst_by_id(id_):
-    with app.app_context():
+    with current_app.app_context():
         asst=Assistant.query.filter_by(id=id_).first()
         return asst
 def get_assts_by_first_name(first_name_):
-    with app.app_context():
+    with current_app.app_context():
         assts=Assistant.query.filter_by(first_name=first_name_).all()
     return assts
 
 def get_assts_by_middle_name(middle_name_):
-    with app.app_context():
+    with current_app.app_context():
         assts=Assistant.query.filter_by(middle_name=middle_name_).all()
     return assts
 
 def get_assts_by_last_name(last_name_):
-    with app.app_context():
+    with current_app.app_context():
         assts=Assistant.query.filter_by(last_name=last_name_).all()
     return assts
 
 def get_asst_by_contact_number(contact_number_):
-    with app.app_context():
+    with current_app.app_context():
         asst=Assistant.query.filter_by(contact_number=contact_number_).first()
     return asst
 
 def get_asst_by_national_id(national_id_):
-    with app.app_context():
+    with current_app.app_context():
         asst=Assistant.query.filter_by(national_id_=national_id_).first()
     return asst    
 
 def get_asst_by_email(email_):
-    with app.app_context():
+    with current_app.app_context():
         asst=Assistant.query.filter_by(email=email_).first()
     return asst
 
 def get_assts_by_date_of_birth(date_of_birth_):
-    with app.app_context():
+    with current_app.app_context():
         assts=Assistant.query.filter_by(date_of_birth=date_of_birth_).first()
     return assts
 
@@ -192,11 +192,11 @@ def get_assts_by_date_of_birth(date_of_birth_):
 #=============================course========================================
 
 def get_course_by_id(id_):
-    with app.app_context():
+    with current_app.app_context():
         course=Course.query.filter_by(id=id_).first()
     return course
 
 def get_course_by_name(name_):
-    with app.app_context():
+    with current_app.app_context():
         course=Course.query.filter_by(name=name_.upper()).first()
         return course
