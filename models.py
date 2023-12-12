@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask import current_app
 
 db = SQLAlchemy()
 
@@ -61,11 +62,12 @@ class Admin(db.Model):
 
 
 def get_student_by_id(id_):
-    with app.app_context(id):
+    with current_app.app_context():
         student=Student.query.filter_by(id=id_).first()
     return student
+
 def get_students_by_first_name(first_name_):
-    with app.app_context():
+    with current_app.app_context():
         students=Student.query.filter_by(first_name=first_name_).all()
     return students
 

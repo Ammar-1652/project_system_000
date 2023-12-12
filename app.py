@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for,session
-from models import db, Student, Professor, Assistant, Course, Admin, student_course
+from models import db, Student, Professor, Assistant, Course, Admin, student_course,get_student_by_id
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Tables.db"
@@ -166,13 +166,16 @@ def student_dashboard():
 
 @app.route("/courses_for_student")
 def courses_for_student():
+    
+    # Your code inside the application context
     student_id = session.get("user_id")
 
     if student_id is not None:
-        student=get_student_by_id(student_id)
-        return render_template("courses_for_student.html", student=student)
+        student = get_student_by_id(student_id)
+        
+    return render_template("courses_for_student.html", student=student)
 
-    # Redirect to login if user is not logged in
+    # Redirect to login if the user is not logged in
     return redirect(url_for("log_in"))
     
 
