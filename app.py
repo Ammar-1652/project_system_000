@@ -192,13 +192,17 @@ def assignment_for_student():
 
 @app.route("/professor_dashboard")
 def professor_dashboard():
-    # Add logic to display professor-specific data
+    professor_id = session.get("user_id")
+    if professor_id is not None:
+        professor = get_professor_by_id(professor_id)
     return render_template("professor_dashboard.html")
 
 
 @app.route("/assistant_dashboard")
 def assistant_dashboard():
-    # Add logic to display assistant-specific data
+    assistant_id = session.get("user_id")
+    if assistant_id is not None:
+        assistant = get_ass_by_id(student_id)
     return render_template("ass_professor_dashboard.html")
 
 
