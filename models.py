@@ -19,7 +19,8 @@ class Student(db.Model):
     date_of_birth = db.Column(db.String(10))
     gender = db.Column(db.String(10))
     class_level = db.Column(db.String(10))
-    password = db.Column(db.String(100))
+    password = db.Column(db.String(100))  
+    is_verified=db.Column(db.Boolean,default=False)
     courses = db.relationship("Course", secondary=student_course, backref="students")
 
 class Professor(db.Model):
@@ -33,6 +34,8 @@ class Professor(db.Model):
     date_of_birth = db.Column(db.String(10))
     gender = db.Column(db.String(10))
     password = db.Column(db.String(100))
+    is_verified=db.Column(db.Boolean,default=False)
+
     courses = db.relationship("Course", backref="professor")
 
 class Assistant(db.Model):
@@ -46,6 +49,8 @@ class Assistant(db.Model):
     date_of_birth = db.Column(db.String(10))
     gender = db.Column(db.String(10))
     password = db.Column(db.String(100))
+    is_verified=db.Column(db.Boolean,default=False)
+
     labs = db.relationship("Course", backref="assistant")
 
 class Course(db.Model):
@@ -59,6 +64,8 @@ class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(100))
+    is_verified=db.Column(db.Boolean,default=True)
+
 
 
 def get_student_by_id(id_):
