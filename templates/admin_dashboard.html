@@ -12,32 +12,57 @@
   <div class="first-column-container">
     <div class="info-container">
       <div class="courses">
-        <a href="{{ url_for('courses_for_student') }}" class="courses-link">
+        <a
+          href="{{ url_for('courses_for_student') }}"
+          class="courses-link"
+          onclick="openPopup()"
+          id="info-course-container"
+        >
           <i class="fa-solid fa-book"></i>
           <p>courses</p>
         </a>
       </div>
       <div class="timetable">
-        <a href="{{ url_for('timetable_for_student') }}" class="timetable-link">
+        <a
+          href="{{ url_for('timetable_for_student') }}"
+          class="timetable-link"
+          onclick="openPopup()"
+          id="info-timetable-container"
+        >
           <i class="fa-regular fa-calendar-days"></i>
           <p>time table</p>
         </a>
       </div>
       <div class="student-menu">
-        <a href="{{ url_for('assignment_for_student') }}" class="student-link">
+        <a
+          href="{{ url_for('assignment_for_student') }}"
+          class="student-link"
+          onclick="openPopup()"
+          id="info-assignment-container"
+        >
           <i class="fa-solid fa-user-graduate"></i>
           <p>students</p>
         </a>
       </div>
       <div class="prof">
-        <a href="{{ url_for('attendance_for_student') }}" class="prof-link">
+        <a
+          href="{{ url_for('attendance_for_student') }}"
+          class="prof-link"
+          onclick="openPopup()"
+          id="info-prof-container"
+        >
           <i class="fa-solid fa-user-tie"></i>
           <p>professors</p>
         </a>
       </div>
 
       <div class="ass-prof">
-        <a href="{{ url_for('attendance_for_student') }}" class="ass-prof-link">
+        <a
+          href="{{ url_for('attendance_for_student') }}"
+          class="ass-prof-link"
+          onclick="openPopup()"
+          id="info-ass-prof-container"
+        >
           <i class="fa-solid fa-chalkboard-user"></i>
           <p>assistant professors</p>
         </a>
@@ -47,6 +72,8 @@
         <a
           href="{{ url_for('attendance_for_student') }}"
           class="verification-link"
+          onclick="openPopup()"
+          id="info-verification-container"
         >
           <i class="fa-solid fa-user-check"></i>
           <p>verification</p>
@@ -88,8 +115,8 @@
 
     <div class="container">
       <div class="assignment">
-        {% block content_of_prof_dashboard %} {% endblock
-        content_of_prof_dashboard %}
+        {% block content_of_admin_dashboard %} {% endblock
+        content_of_admin_dashboard %}
       </div>
     </div>
   </div>
