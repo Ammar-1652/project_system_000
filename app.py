@@ -239,7 +239,7 @@ def professor_dashboard():
 def assistant_dashboard():
     assistant_id = session.get("user_id")
     if assistant_id is not None:
-        assistant = get_ass_by_id(student_id)
+        assistant = get_asst_by_id(student_id)
     return render_template("ass_professor_dashboard.html",assistant=assistant)
 
 
