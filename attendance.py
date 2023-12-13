@@ -7,7 +7,7 @@ app = Flask(__name__)
 # A function to render the homepage
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('attendance.html')
 
 # A function to handle teacher actions
 @app.route('/teacher', methods=['GET', 'POST'])
