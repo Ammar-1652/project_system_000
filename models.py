@@ -66,7 +66,10 @@ class Admin(db.Model):
     password = db.Column(db.String(100))
     is_verified=db.Column(db.Boolean,default=True)
 
-
+def get_students():
+    with current_app.app_context():
+        students=Student.query.all()
+    return students
 
 def get_student_by_id(id_):
     with current_app.app_context():
@@ -111,9 +114,15 @@ def get_students_by_date_of_birth(date_of_birth_):
 
 
 #==================Professor====================================
+
+def get_profs():
+    with current_app.app_context():
+        profs=Professor.query.all()
+    return profs
+
 def get_prof_by_id(id_):
     with current_app.app_context():
-        prof=Professor.query.filter_by(id=id).first()
+        prof=Professor.query.filter_by(id=id_).first()
     return prof
 def get_profs_by_first_name(first_name_):
     with current_app.app_context():
@@ -155,10 +164,15 @@ def get_profs_by_date_of_birth(date_of_birth_):
 
 #=======================Assistant=====================================
 
+def get_assts():
+    with current_app.app_context():
+        assts=Assistant.query.all()
+    return assts
+
 def get_asst_by_id(id_):
     with current_app.app_context():
         asst=Assistant.query.filter_by(id=id_).first()
-        return asst
+    return asst
 def get_assts_by_first_name(first_name_):
     with current_app.app_context():
         assts=Assistant.query.filter_by(first_name=first_name_).all()
@@ -197,6 +211,11 @@ def get_assts_by_date_of_birth(date_of_birth_):
 #==========================================================================================
 
 #=============================course========================================
+
+def get_course():
+    with current_app.app_context():
+        courses=Course.query.all()
+    return courses
 
 def get_course_by_id(id_):
     with current_app.app_context():
