@@ -45,7 +45,7 @@ def log_in():
 
         if student:
             session["user_id"] = student.id
-            flash("Login successful for student.", "success")
+            flash(f"Login successful for {{student.frist_name}}.", "success")
             return redirect(url_for("courses_for_student"))
         elif professor:
             flash("Login successful for professor.", "success")
