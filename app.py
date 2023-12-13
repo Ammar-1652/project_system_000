@@ -10,6 +10,7 @@ from models import (
     get_student_by_id,
 )
 
+
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Tables.db"
 app.config["SECRET_KEY"] = "your_secret_key"
@@ -57,7 +58,7 @@ def log_in():
 
         elif admin:
             flash("Login successful for admin.", "success")
-            return redirect("/dashboard")
+            return redirect("/admin_dashboard")
 
         else:
             flash("Invalid email or password", "danger")
@@ -88,9 +89,10 @@ def sign_up_for_students():
         )
         db.session.add(s)
         db.session.commit()
+
         flash('''Signup successful for student
         You will wait your verfication''', "success")
-        return redirect(url_for("home"))
+    
     return render_template("sign_up_for_students.html")
 
 
@@ -138,12 +140,11 @@ def sign_up_for_prof():
     return render_template("sign_up_for_prof.html")
 
 
-@app.route("/dashboard", methods=["GET", "POST"])
+@app.route("/admin_dashboard", methods=["GET", "POST"])
 def admin_dashboard():
     if request.method == "POST":
         # Handle enrollment creation when the form is submitted
         user_id = request.form["user_id"]
-        user_type = request.form["user_type"]
         course_id = request.form["course_id"]
 
         if user_type == "student":
@@ -170,13 +171,12 @@ def admin_dashboard():
     courses = Course.query.all()
 
     return render_template(
-        "dashboard.html",
-        students=students,
-        professors=professors,
-        assistants=assistants,
-        courses=courses,
-    )
-
+        "admin_dashboard.html",
+        student=Student,
+        professor=Professor,
+        assistant=Assistant,
+        course=Course,
+        )
 
 @app.route("/student_dashboard")
 def student_dashboard():
@@ -206,7 +206,6 @@ def timetable_for_student():
 
 @app.route("/assignment_for_student")
 def assignment_for_student():
-    # Your view logic here
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
@@ -226,7 +225,7 @@ def professor_dashboard():
     professor_id = session.get("user_id")
     if professor_id is not None:
         professor = get_professor_by_id(professor_id)
-    return render_template("professor_dashboard.html")
+    return render_template("professor_dashboard.html",professor=professor)
 
 
 @app.route("/assistant_dashboard")
@@ -234,7 +233,7 @@ def assistant_dashboard():
     assistant_id = session.get("user_id")
     if assistant_id is not None:
         assistant = get_ass_by_id(student_id)
-    return render_template("ass_professor_dashboard.html")
+    return render_template("ass_professor_dashboard.html",assistant=assistant)
 
 
 if __name__ == "__main__":
