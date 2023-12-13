@@ -1,17 +1,9 @@
+# app.py
 from flask import Flask, render_template, request
-from models import Student
-
+from logic import open_attendance, close_attendance, sign_attendance, view_teacher_records, view_student_records
 
 app = Flask(__name__)
 
-# Your existing data and functions go here
-is_open=False
-def open_attendance():
-    if is_open:
-        pass
-    else:
-        is_open=True
-        ahmed=Student()
 # A function to render the homepage
 @app.route('/')
 def home():
