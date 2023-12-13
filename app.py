@@ -244,7 +244,15 @@ def assistant_dashboard():
         assistant = get_asst_by_id(assistant_id)
     return render_template("ass_professor_dashboard.html",assistant=Assistant)
 
+@app.route("/verification_for_admin")
+def verification_for_admin():
+    # Add logic to display student-specific data
+    return render_template("verification_for_admin.html")
 
+@app.route("/courses_for_admin")
+def courses_for_admin():
+    # Add logic to display student-specific data
+    return render_template("courses_for_admin.html")
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
