@@ -1,0 +1,103 @@
+{% extends 'layout.html' %} {% block style %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin_dashboard.css') }}"
+/>
+{% endblock style %} {% block content %}
+<!-- Start Dashboard -->
+
+<!-- Start First Column -->
+
+<div class="big-container">
+  <div class="first-column-container">
+    <div class="info-container">
+      <div class="courses">
+        <a href="{{ url_for('courses_for_student') }}" class="courses-link">
+          <i class="fa-solid fa-book"></i>
+          <p>courses</p>
+        </a>
+      </div>
+      <div class="timetable">
+        <a href="{{ url_for('timetable_for_student') }}" class="timetable-link">
+          <i class="fa-regular fa-calendar-days"></i>
+          <p>time table</p>
+        </a>
+      </div>
+      <div class="student-menu">
+        <a href="{{ url_for('assignment_for_student') }}" class="student-link">
+          <i class="fa-solid fa-user-graduate"></i>
+          <p>students</p>
+        </a>
+      </div>
+      <div class="prof">
+        <a href="{{ url_for('attendance_for_student') }}" class="prof-link">
+          <i class="fa-solid fa-user-tie"></i>
+          <p>professors</p>
+        </a>
+      </div>
+
+      <div class="ass-prof">
+        <a href="{{ url_for('attendance_for_student') }}" class="ass-prof-link">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <p>assistant professors</p>
+        </a>
+      </div>
+
+      <div class="verification">
+        <a
+          href="{{ url_for('attendance_for_student') }}"
+          class="verification-link"
+        >
+          <i class="fa-solid fa-user-check"></i>
+          <p>verification</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="edit-container">
+      <div class="setting-container">
+        <a href="">
+          <i class="fa-solid fa-gear"></i>
+          <p>Settings</p>
+        </a>
+      </div>
+      <div class="log-out-container">
+        <a href="{{ url_for('log_in') }}">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <p>log out</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-content">
+    <div class="header-container">
+      <input type="text" placeholder="🔍 Search..." class="search-input" />
+
+      <div class="header-end-container">
+        <i class="fa-solid fa-bell"></i>
+        <div class="profile-container">
+          <i class="fa-solid fa-user"></i>
+          <div class="account-details">
+            <h6>
+              {{'Dr. ' + professor.first_name +" " +professor.last_name }}
+            </h6>
+            <p>Professor</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="assignment">
+        {% block content_of_prof_dashboard %} {% endblock
+        content_of_prof_dashboard %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End First Column -->
+
+<!-- End Dashboard -->
+{% endblock content %}
