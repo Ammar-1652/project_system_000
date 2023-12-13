@@ -1,14 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session,flash
-from models import (
-    db,
-    Student,
-    Professor,
-    Assistant,
-    Course,
-    Admin,
-    student_course,
-    get_student_by_id,
-)
+from models import *
 
 
 app = Flask(__name__)
