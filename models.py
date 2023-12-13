@@ -80,7 +80,6 @@ class Assistant(db.Model):
     password = db.Column(db.String(100))
     is_verified=db.Column(db.Boolean,default=False)
     
-    assignments = db.relationship('Assignment', backref='assistant')
 
     labs = db.relationship("Course", backref="assistant")
 
