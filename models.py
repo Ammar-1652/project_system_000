@@ -14,10 +14,6 @@ student_assignment=db.Table("student_assignment",
     db.Column("assignment_id",db.Integer, db.ForeignKey('assignment.id'),primary_key=True)
 
 )
-class StudentAssignment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
-    assignment_id = db.Column(db.Integer, db.ForeignKey('assignment.id'))
 
 class Assignment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
