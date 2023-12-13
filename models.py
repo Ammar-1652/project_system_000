@@ -122,7 +122,7 @@ def get_profs():
 
 def get_prof_by_id(id_):
     with current_app.app_context():
-        prof=Professor.query.filter_by(id=id).first()
+        prof=Professor.query.filter_by(id=id_).first()
     return prof
 def get_profs_by_first_name(first_name_):
     with current_app.app_context():
