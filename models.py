@@ -3,10 +3,37 @@ from flask import current_app
 
 db = SQLAlchemy()
 
+
 student_course = db.Table("student_course",
     db.Column("student_id", db.Integer, db.ForeignKey("student.id"), primary_key=True),
     db.Column("course_id", db.Integer, db.ForeignKey("course.id"), primary_key=True)
 )
+
+student_assignment=db.Table("student_assignment",
+    db.Column("student_id",db.Integer,db.ForeignKey('student.id'),primary_key=True),
+    db.Column("assignment_id",db.Integer, db.ForeignKey('assignment.id'),primary_key=True)
+
+)
+class StudentAssignment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+    assignment_id = db.Column(db.Integer, db.ForeignKey('assignment.id'))
+
+class Assignment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    description = db.Column(db.Text)
+    file_url = db.Column(db.String(255))
+    upload_date = db.Column(db.DateTime, default=datetime.utcnow)
+    dead_line_date=db.Column(db.DateTime)
+
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+    professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'))
+    students = db.relationship('Student', secondary='student_assignment', back_populates='assignments')
+
+
+
+
 
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,6 +48,9 @@ class Student(db.Model):
     class_level = db.Column(db.String(10))
     password = db.Column(db.String(100))  
     is_verified=db.Column(db.Boolean,default=False)
+    
+    assignments = db.relationship('Assignment', secondary='student_assignment', back_populates='students')
+
     courses = db.relationship("Course", secondary=student_course, backref="students")
 
 class Professor(db.Model):
@@ -35,6 +65,8 @@ class Professor(db.Model):
     gender = db.Column(db.String(10))
     password = db.Column(db.String(100))
     is_verified=db.Column(db.Boolean,default=False)
+    
+    assignments = db.relationship('Assignment', backref='professor')
 
     courses = db.relationship("Course", backref="professor")
 
@@ -50,6 +82,8 @@ class Assistant(db.Model):
     gender = db.Column(db.String(10))
     password = db.Column(db.String(100))
     is_verified=db.Column(db.Boolean,default=False)
+    
+    assignments = db.relationship('Assignment', backref='assistant')
 
     labs = db.relationship("Course", backref="assistant")
 
@@ -57,8 +91,12 @@ class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     hours = db.Column(db.Integer)
+    
+    
     professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'))
     assistant_id = db.Column(db.Integer, db.ForeignKey('assistant.id'))
+    assignments = db.relationship('Assignment', backref='course')
+
 
 class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
