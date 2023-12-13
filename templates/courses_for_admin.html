@@ -7,5 +7,73 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/courses_for_admin.css') }}"
 />
-{% endblock style %} {% block content_of_admin_dashboard %} {% endblock
-content_of_admin_dashboard %}
+{% endblock style %} {% block content_of_admin_dashboard %}
+<header class="courses-header">
+  <h1>College Courses</h1>
+</header>
+
+<div class="container">
+  <!-- Course cards -->
+  <a href="course1.html" class="course-card">
+    <div>
+      <h2>Course Title 1</h2>
+      <div class="course-details">
+        <p>Description of the course goes here. This is a sample text.</p>
+        <p><strong>Instructor:</strong> John Doe</p>
+      </div>
+    </div>
+  </a>
+
+  <!-- Add more course cards -->
+  <!-- Repeat the structure of course cards for additional courses -->
+  <a href="course2.html" class="course-card">
+    <div>
+      <h2>Course Title 2</h2>
+      <div class="course-details">
+        <p>Description of the course goes here. This is a sample text.</p>
+        <p><strong>Instructor:</strong> Jane Smith</p>
+      </div>
+    </div>
+  </a>
+
+  <a href="course3.html" class="course-card">
+    <div>
+      <h2>Course Title 3</h2>
+      <div class="course-details">
+        <p>Description of the course goes here. This is a sample text.</p>
+        <p><strong>Instructor:</strong> Alex Johnson</p>
+      </div>
+    </div>
+  </a>
+
+  <a href="course4.html" class="course-card">
+    <div>
+      <h2>Course Title 4</h2>
+      <div class="course-details">
+        <p>Description of the course goes here. This is a sample text.</p>
+        <p><strong>Instructor:</strong> Emily Clark</p>
+      </div>
+    </div>
+  </a>
+
+  <a href="course5.html" class="course-card">
+    <div>
+      <h2>Course Title 5</h2>
+      <div class="course-details">
+        <p>Description of the course goes here. This is a sample text.</p>
+        <p><strong>Instructor:</strong> David Brown</p>
+      </div>
+    </div>
+  </a>
+
+  <a href="course6.html" class="course-card">
+    <div>
+      <h2>Course Title 6</h2>
+      <div class="course-details">
+        <p>Description of the course goes here. This is a sample text.</p>
+        <p><strong>Instructor:</strong> Sarah Johnson</p>
+      </div>
+    </div>
+  </a>
+</div>
+{% endblock content_of_admin_dashboard %}
