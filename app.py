@@ -190,20 +190,27 @@ def courses_for_student():
 
 @app.route("/timetable_for_student")
 def timetable_for_student():
-    # Your view logic here
-    return render_template("timetable_for_student.html")
+    student_id = session.get("user_id")
+    if student_id is not None:
+        student = get_student_by_id(student_id)
+    return render_template("timetable_for_student.html",student=student)
 
 
 @app.route("/assignment_for_student")
 def assignment_for_student():
     # Your view logic here
-    return render_template("assignment_for_student.html")
+    student_id = session.get("user_id")
+    if student_id is not None:
+        student = get_student_by_id(student_id)
+    return render_template("assignment_for_student.html",student=student)
 
 
 @app.route("/attendance_for_student")
 def attendance_for_student():
-    # Your view logic here
-    return render_template("attendance_for_student.html")
+    student_id = session.get("user_id")
+    if student_id is not None:
+        student = get_student_by_id(student_id)
+    return render_template("attendance_for_student.html",student=student)
 
 
 @app.route("/professor_dashboard")
