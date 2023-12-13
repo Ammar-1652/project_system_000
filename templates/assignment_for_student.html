@@ -8,24 +8,25 @@
   href="{{ url_for('static', filename='css/student_dashboard.css') }}"
 />
 {% endblock style %} {% block content_of_student_dashboard %}
-<h1>Welcome to the Assignments Page</h1>
-<div class="welcome-message">
-  <h2>Instructions:</h2>
-  <p>Download your assigned task below.</p>
+<h1 class="student-assignment">Student Assignments</h1>
+
+<!-- Sample assignment -->
+<div class="assignment-content-container">
+  <h2>
+    Assignment Title <span style="font-size: 14px">(Assignment Material)</span>
+  </h2>
+  <p>Professor: Prof. John Doe</p>
+  <p>Deadline: October 31, 2023</p>
+  <a href="professor_assignment.pdf" download>Download Assignment</a>
 </div>
-<div class="assignment-details">
-  <a href="assignment-link" class="download-button" download
-    >Download the Task</a
-  >
-  <p class="warning">
-    <span class="warning-icon"></span>
-    <span class="warning-message"
-      >The deadline is [Specify the due date here].</span
-    >
-  </p>
-  <p>
-    If you have any questions, please contact us via email at:
-    <a href="mailto:email@example.com">email@example.com</a>
-  </p>
+
+<!-- Upload solved file form -->
+<div class="upload-form">
+  <h2 class="student-assignment">Upload Solved File</h2>
+  <form action="/upload_solution" method="post" enctype="multipart/form-data">
+    <label for="file">Select file:</label>
+    <input type="file" id="file" name="file" required />
+    <input type="submit" value="Upload" />
+  </form>
 </div>
 {% endblock content_of_student_dashboard %}

@@ -28,3 +28,36 @@ body {
   -o-border-radius: 10px;
   border-radius: 10px;
 }
+
+table {
+  border-collapse: collapse;
+  width: 60%;
+  margin: 20px auto;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  transition: background-color 0.3s ease; /* Add transition effect */
+}
+
+th {
+  background-color: var(
+    --main-color
+  ); /* Set header background color to var(--main-color) */
+  color: var(--fifth-color); /* Set header text color to var(--fifth-color) */
+}
+
+td:nth-child(1),
+th:nth-child(1) {
+  background-color: var(
+    --main-color
+  ); /* Set background color of the first column */
+  color: var(--fifth-color); /* Set text color of the first column */
+}
+
+tr:hover {
+  background-color: var(--fifth-color); /* Add hover effect for table rows */
+}

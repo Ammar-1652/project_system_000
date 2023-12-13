@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session,flash
+from datetime import datetime
 from models import *
 
 
@@ -123,7 +124,6 @@ def sign_up_for_prof():
 @app.route("/admin_dashboard", methods=["GET", "POST"])
 def admin_dashboard():
     if request.method == "POST":
-        # Handle verification or rejection when the form is submitted
         action = request.form.get("action")
         user_id = request.form.get("user_id")
 
@@ -155,10 +155,22 @@ def admin_dashboard():
             else:
                 flash("User not found.", "danger")
 
-    # Retrieve all signups from students, professors, and assistants
+        elif action == "add_course":
+            course_name = request.form.get("course_name")
+            hours=request.form.get("course_hours")
+
+            new_course = Course(
+                name=course_name,
+                hours=hours,
+            )
+            db.session.add(new_course)
+            db.session.commit()
+            flash("Course added successfully.", "success")
+
     unverified_students = Student.query.filter_by(is_verified=False).all()
     unverified_professors = Professor.query.filter_by(is_verified=False).all()
     unverified_assistants = Assistant.query.filter_by(is_verified=False).all()
+    courses = Course.query.all()
 
     return render_template(
         "admin_dashboard.html",
@@ -168,7 +180,8 @@ def admin_dashboard():
         student=Student,
         professor=Professor,
         assistant=Assistant,
-        admin=Admin
+        admin=Admin,
+        courses=courses
     )
 
 
@@ -184,7 +197,7 @@ def courses_for_student():
     if student_id is not None:
         student = get_student_by_id(student_id)
 
-    return render_template("courses_for_student.html", student=student)
+    return render_template("courses_for_student.html", student=Student,admin=Admin,courses=Course)
 
     # Redirect to login if the user is not logged in
     return redirect(url_for("log_in"))
@@ -211,23 +224,23 @@ def attendance_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-    return render_template("attendance_for_student.html",student=student)
+    return render_template("attendance_for_student.html",student=Student)
 
 
 @app.route("/professor_dashboard")
 def professor_dashboard():
     professor_id = session.get("user_id")
     if professor_id is not None:
-        professor = get_professor_by_id(professor_id)
-    return render_template("professor_dashboard.html",professor=professor)
+        professor = get_prof_by_id(professor_id)
+    return render_template("professor_dashboard.html",professor=Professor)
 
 
 @app.route("/assistant_dashboard")
 def assistant_dashboard():
     assistant_id = session.get("user_id")
     if assistant_id is not None:
-        assistant = get_ass_by_id(student_id)
-    return render_template("ass_professor_dashboard.html",assistant=assistant)
+        assistant = get_asst_by_id(assistant_id)
+    return render_template("ass_professor_dashboard.html",assistant=Assistant)
 
 
 if __name__ == "__main__":
