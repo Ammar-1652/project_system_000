@@ -1,5 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for,session
-from models import db, Student, Professor, Assistant, Course, Admin, student_course,get_student_by_id
+from flask import Flask, render_template, request, redirect, url_for, session
+from models import (
+    db,
+    Student,
+    Professor,
+    Assistant,
+    Course,
+    Admin,
+    student_course,
+    get_student_by_id,
+)
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Tables.db"
@@ -34,10 +43,10 @@ def log_in():
         assistant = Assistant.query.filter_by(email=email, password=password).first()
         admin = Admin.query.filter_by(email=email, password=password).first()
 
-        if student :
+        if student:
             session["user_id"] = student.id
             return redirect(url_for("courses_for_student"))
-        elif professor :
+        elif professor:
             # Redirect to professor dashboard
             return redirect("/professor_dashboard")
 
@@ -45,7 +54,7 @@ def log_in():
             # Redirect to assistant dashboard
             return redirect("/assistant_dashboard")
 
-        elif admin :
+        elif admin:
             # Redirect to admin dashboard
             return redirect("/dashboard")
 
@@ -53,7 +62,8 @@ def log_in():
             return "Invalid email or password"
 
     return render_template("log_in.html")
-    
+
+
 @app.route("/sign_up")
 def sign_up():
     return render_template("sign_up.html")
@@ -158,6 +168,8 @@ def admin_dashboard():
         assistants=assistants,
         courses=courses,
     )
+
+
 @app.route("/student_dashboard")
 def student_dashboard():
     # Add logic to display student-specific data
@@ -169,13 +181,11 @@ def courses_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-        
+
     return render_template("courses_for_student.html", student=student)
 
     # Redirect to login if the user is not logged in
     return redirect(url_for("log_in"))
-    
-
 
 
 @app.route("/timetable_for_student")
@@ -188,6 +198,12 @@ def timetable_for_student():
 def assignment_for_student():
     # Your view logic here
     return render_template("assignment_for_student.html")
+
+
+@app.route("/attendance_for_student")
+def attendance_for_student():
+    # Your view logic here
+    return render_template("attendance_for_student.html")
 
 
 @app.route("/professor_dashboard")

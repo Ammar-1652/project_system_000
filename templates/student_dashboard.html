@@ -1,0 +1,93 @@
+{% extends 'layout.html' %} {% block style %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/student_dashboard.css') }}"
+/>
+{% endblock style %} {% block content %}
+<!-- Start Dashboard -->
+
+<!-- Start First Column -->
+
+<div class="big-container">
+  <div class="content-container">
+    <div class="first-column-container">
+      <div class="info-container">
+        <div class="courses">
+          <a href="{{ url_for('courses_for_student') }}" class="courses-link">
+            <i class="fa-solid fa-book"></i>
+            <p>courses</p>
+          </a>
+        </div>
+        <div class="timetable">
+          <a
+            href="{{ url_for('timetable_for_student') }}"
+            class="timetable-link"
+          >
+            <i class="fa-regular fa-calendar-days"></i>
+            <p>time table</p>
+          </a>
+        </div>
+        <div class="assignment-menu">
+          <a
+            href="{{ url_for('assignment_for_student') }}"
+            class="assignment-link"
+          >
+            <i class="fa-solid fa-list-check"></i>
+            <p>assignments</p>
+          </a>
+        </div>
+        <div class="attendance">
+          <a
+            href="{{ url_for('attendance_for_student') }}"
+            class="attendance-link"
+          >
+            <i class="fa-solid fa-circle-check"></i>
+            <p>attendance</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="edit-container">
+        <div class="setting-container">
+          <a href="">
+            <i class="fa-solid fa-gear"></i>
+            <p>Settings</p>
+          </a>
+        </div>
+        <div class="log-out-container">
+          <a href="{{ url_for('log_in') }}">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <p>log out</p>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-container">
+      <input type="text" placeholder="🔍 Search..." class="search-input" />
+
+      <div class="header-end-container">
+        <i class="fa-solid fa-bell"></i>
+        <div class="profile-container">
+          <i class="fa-solid fa-user"></i>
+          <div class="account-details">
+            <h6>{{student.first_name +" " +student.middle_name }}</h6>
+            <p>{{student.class_level}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="assignment">
+        {% block content_of_student_dashboard %} {% endblock
+        content_of_student_dashboard %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End First Column -->
+
+<!-- End Dashboard -->
+{% endblock content %}

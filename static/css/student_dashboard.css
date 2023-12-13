@@ -17,6 +17,7 @@ body {
 }
 /* Global Rules */
 
+/* Start Students Dashboard Structure */
 /* Start First Column */
 
 .big-container {
@@ -53,7 +54,7 @@ body {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  color: var(--second-color);
+  color: var(--fifth-color);
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
   -ms-transition: 0.3s;
@@ -81,11 +82,10 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: calc(100% - 30%);
-  margin-top: 15px;
-  margin-left: 15px;
+  width: calc(100% - 10%);
   height: fit-content;
   align-items: center;
+  margin: 15px 0 15px 15px;
 }
 
 .header-container input {
@@ -105,8 +105,8 @@ body {
 .header-container .header-end-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 25%;
+  /* justify-content: space-between; */
+  width: 38%;
 }
 
 .header-container .header-end-container i {
@@ -123,12 +123,20 @@ body {
   height: max-content;
 }
 
+.header-container .header-end-container .fa-bell {
+  margin-right: 35px;
+}
+
 .header-container .header-end-container .profile-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   width: 62.5%;
+}
+
+.header-container .header-end-container .profile-container .account-details {
+  margin-left: 10px;
 }
 
 .header-container .header-end-container .profile-container h6 {
@@ -142,3 +150,15 @@ body {
 }
 
 /* End Header */
+
+/* Start Content */
+
+.content-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+/* End Content */
+
+/* End Students Dashboard Structure */
