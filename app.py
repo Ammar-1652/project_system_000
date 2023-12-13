@@ -231,7 +231,7 @@ def attendance_for_student():
 def professor_dashboard():
     professor_id = session.get("user_id")
     if professor_id is not None:
-        professor = get_professor_by_id(professor_id)
+        professor = get_prof_by_id(professor_id)
     return render_template("professor_dashboard.html",professor=professor)
 
 
