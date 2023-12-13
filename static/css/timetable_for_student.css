@@ -44,16 +44,20 @@ td {
 }
 
 th {
-  background-color: orange; /* Set header background color to orange */
-  color: white; /* Set header text color to white */
+  background-color: var(
+    --main-color
+  ); /* Set header background color to var(--main-color) */
+  color: var(--fifth-color); /* Set header text color to var(--fifth-color) */
 }
 
 td:nth-child(1),
 th:nth-child(1) {
-  background-color: orange; /* Set background color of the first column */
-  color: white; /* Set text color of the first column */
+  background-color: var(
+    --main-color
+  ); /* Set background color of the first column */
+  color: var(--fifth-color); /* Set text color of the first column */
 }
 
 tr:hover {
-  background-color: #f9f9f9; /* Add hover effect for table rows */
+  background-color: var(--fifth-color); /* Add hover effect for table rows */
 }
