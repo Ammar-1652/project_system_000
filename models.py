@@ -93,8 +93,8 @@ class Course(db.Model):
     hours = db.Column(db.Integer)
     
     
-    professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'))
-    assistant_id = db.Column(db.Integer, db.ForeignKey('assistant.id'))
+    professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'),default=None)
+    assistant_id = db.Column(db.Integer, db.ForeignKey('assistant.id'),default=None)
     assignments = db.relationship('Assignment', backref='course')
 
 
