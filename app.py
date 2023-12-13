@@ -46,22 +46,17 @@ def log_in():
 
         if student:
             session["user_id"] = student.id
-            flash(f"Login successful for {{student.frist_name}}.", "success")
             return redirect(url_for("courses_for_student"))
         elif professor:
-            flash("Login successful for professor.", "success")
             return redirect("/professor_dashboard")
 
         elif assistant:
-            flash("Login successful for assistant.", "success")
             return redirect("/assistant_dashboard")
 
         elif admin:
-            flash("Login successful for admin.", "success")
             return redirect("/admin_dashboard")
 
         else:
-            flash("Invalid email or password", "danger")
             return "Invalid email or password"
 
     return render_template("log_in.html")
@@ -89,10 +84,6 @@ def sign_up_for_students():
         )
         db.session.add(s)
         db.session.commit()
-
-        flash('''Signup successful for student
-        You will wait your verfication''', "success")
-    
     return render_template("sign_up_for_students.html")
 
 
@@ -112,8 +103,6 @@ def sign_up_for_ass_prof():
         )
         db.session.add(a)
         db.session.commit()
-        flash('''Signup successful for assisstant
-        You will wait your verfication''', "success")
         return redirect(url_for("home"))
     return render_template("sign_up_for_ass_prof.html")
 
@@ -134,49 +123,63 @@ def sign_up_for_prof():
         )
         db.session.add(p)
         db.session.commit()
-        flash('''Signup successful for prof
-        You will wait your verfication''', "success")
         return redirect(url_for("home"))
     return render_template("sign_up_for_prof.html")
 
 
+# ... (previous code)
+
 @app.route("/admin_dashboard", methods=["GET", "POST"])
 def admin_dashboard():
     if request.method == "POST":
-        # Handle enrollment creation when the form is submitted
-        user_id = request.form["user_id"]
-        course_id = request.form["course_id"]
+        # Handle verification or rejection when the form is submitted
+        action = request.form.get("action")
+        user_id = request.form.get("user_id")
 
-        if user_type == "student":
-            user = Student.query.get(user_id)
-        elif user_type == "professor":
-            user = Professor.query.get(user_id)
-        elif user_type == "assistant":
-            user = Assistant.query.get(user_id)
-        else:
-            return "Invalid user type"
+        if action == "verify":
+            user = None
+            for model in [Student, Professor, Assistant]:
+                user = model.query.get(user_id)
+                if user:
+                    break
 
-        if user is not None:
-            course = Course.query.get(course_id)
-            # Add the course to the user's courses relationship
-            user.courses.append(course)
-            db.session.commit()
-        else:
-            return "User not found"
+            if user:
+                user.verified = True
+                db.session.commit()
+                flash("User verified successfully.", "success")
+            else:
+                flash("User not found.", "danger")
 
-    # Retrieve data for displaying on the admin dashboard
-    students = Student.query.all()
-    professors = Professor.query.all()
-    assistants = Assistant.query.all()
-    courses = Course.query.all()
+        elif action == "reject":
+            user = None
+            for model in [Student, Professor, Assistant]:
+                user = model.query.get(user_id)
+                if user:
+                    break
+
+            if user:
+                db.session.delete(user)
+                db.session.commit()
+                flash("User rejected and deleted.", "success")
+            else:
+                flash("User not found.", "danger")
+
+    # Retrieve all signups from students, professors, and assistants
+    unverified_students = Student.query.filter_by(is_verified=False).all()
+    unverified_professors = Professor.query.filter_by(is_verified=False).all()
+    unverified_assistants = Assistant.query.filter_by(is_verified=False).all()
 
     return render_template(
         "admin_dashboard.html",
+        unverified_students=unverified_students,
+        unverified_professors=unverified_professors,
+        unverified_assistants=unverified_assistants,
         student=Student,
         professor=Professor,
         assistant=Assistant,
-        course=Course,
-        )
+        admin=Admin
+    )
+
 
 @app.route("/student_dashboard")
 def student_dashboard():
