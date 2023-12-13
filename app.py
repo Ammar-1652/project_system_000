@@ -161,7 +161,7 @@ def admin_dashboard():
 
             new_course = Course(
                 name=course_name,
-                hours=course_hours,
+                hours=hours,
             )
             db.session.add(new_course)
             db.session.commit()
