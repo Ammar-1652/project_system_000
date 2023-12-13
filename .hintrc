@@ -17,6 +17,7 @@
           "height: fit-content"
         ]
       }
-    ]
+    ],
+    "meta-viewport": "off"
   }
 }
