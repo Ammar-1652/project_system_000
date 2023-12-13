@@ -224,7 +224,7 @@ def attendance_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-    return render_template("attendance_for_student.html",student=student)
+    return render_template("attendance_for_student.html",student=Student)
 
 
 @app.route("/professor_dashboard")
@@ -232,15 +232,15 @@ def professor_dashboard():
     professor_id = session.get("user_id")
     if professor_id is not None:
         professor = get_prof_by_id(professor_id)
-    return render_template("professor_dashboard.html",professor=professor)
+    return render_template("professor_dashboard.html",professor=Professor)
 
 
 @app.route("/assistant_dashboard")
 def assistant_dashboard():
     assistant_id = session.get("user_id")
     if assistant_id is not None:
-        assistant = get_asst_by_id(student_id)
-    return render_template("ass_professor_dashboard.html",assistant=assistant)
+        assistant = get_asst_by_id(Assistant_id)
+    return render_template("ass_professor_dashboard.html",assistant=Assistant)
 
 
 if __name__ == "__main__":
