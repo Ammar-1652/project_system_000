@@ -31,8 +31,12 @@ body {
 
 header.courses-header,
 footer {
-  background-color: orange; /* Set header and footer background color to orange */
-  color: white; /* Set header and footer text color to white */
+  background-color: var(
+    --main-color
+  ); /* Set header and footer background color to var(--main-color) */
+  color: var(
+    --fifth-color
+  ); /* Set header and footer text color to var(--fifth-color) */
   text-align: center;
   padding: 20px 0;
 }
@@ -45,7 +49,9 @@ footer {
 }
 
 .course-card {
-  background-color: white; /* Set background color of cards to white */
+  background-color: var(
+    --fifth-color
+  ); /* Set background color of cards to var(--fifth-color) */
   margin: 20px 0;
   padding: 20px;
   border-radius: 5px;
@@ -60,11 +66,11 @@ footer {
 
 .course-card:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  border: 2px solid orange; /* Add orange border on hover */
+  border: 2px solid var(--main-color); /* Add var(--main-color) border on hover */
 }
 
 .course-card h2 {
-  color: orange; /* Set course title color to orange */
+  color: var(--main-color); /* Set course title color to var(--main-color) */
   margin-bottom: 10px;
   position: relative;
   display: inline-block;
@@ -77,5 +83,5 @@ footer {
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: orange; /* Set line color to orange */
+  background-color: var(--main-color); /* Set line color to var(--main-color) */
 }

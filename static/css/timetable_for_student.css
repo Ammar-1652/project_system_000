@@ -28,3 +28,32 @@ body {
   -o-border-radius: 10px;
   border-radius: 10px;
 }
+
+table {
+  border-collapse: collapse;
+  width: 60%;
+  margin: 20px auto;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  transition: background-color 0.3s ease; /* Add transition effect */
+}
+
+th {
+  background-color: orange; /* Set header background color to orange */
+  color: white; /* Set header text color to white */
+}
+
+td:nth-child(1),
+th:nth-child(1) {
+  background-color: orange; /* Set background color of the first column */
+  color: white; /* Set text color of the first column */
+}
+
+tr:hover {
+  background-color: #f9f9f9; /* Add hover effect for table rows */
+}
