@@ -45,20 +45,22 @@ def log_in():
 
         if student:
             session["user_id"] = student.id
+            flash("Login successful for student.", "success")
             return redirect(url_for("courses_for_student"))
         elif professor:
-            # Redirect to professor dashboard
+            flash("Login successful for professor.", "success")
             return redirect("/professor_dashboard")
 
         elif assistant:
-            # Redirect to assistant dashboard
+            flash("Login successful for assistant.", "success")
             return redirect("/assistant_dashboard")
 
         elif admin:
-            # Redirect to admin dashboard
+            flash("Login successful for admin.", "success")
             return redirect("/dashboard")
 
         else:
+            flash("Invalid email or password", "danger")
             return "Invalid email or password"
 
     return render_template("log_in.html")
@@ -86,7 +88,9 @@ def sign_up_for_students():
         )
         db.session.add(s)
         db.session.commit()
-
+        flash('''Signup successful for student
+        You will wait your verfication''', "success")
+        return redirect(url_for("home"))
     return render_template("sign_up_for_students.html")
 
 
@@ -106,7 +110,9 @@ def sign_up_for_ass_prof():
         )
         db.session.add(a)
         db.session.commit()
-
+        flash('''Signup successful for assisstant
+        You will wait your verfication''', "success")
+        return redirect(url_for("home"))
     return render_template("sign_up_for_ass_prof.html")
 
 
@@ -126,7 +132,9 @@ def sign_up_for_prof():
         )
         db.session.add(p)
         db.session.commit()
-
+        flash('''Signup successful for prof
+        You will wait your verfication''', "success")
+        return redirect(url_for("home"))
     return render_template("sign_up_for_prof.html")
 
 
