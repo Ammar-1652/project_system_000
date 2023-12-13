@@ -8,7 +8,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Tables.db"
 app.config["SECRET_KEY"] = "your_secret_key"
 db.init_app(app)
 
-Acounts=[]
+Acounts=["hi"]
 
 @app.route("/")
 def index():
