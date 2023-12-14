@@ -3,6 +3,12 @@ section {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  width: 98%;
 }
 
 .card {
@@ -13,16 +19,24 @@ section {
   padding: 1em;
   width: 300px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .card h2 {
   color: #333;
 }
 
+.buttons {
+  width: 30%;
+  display: flex;
+}
+
 .btn-approve,
 .btn-decline {
-  padding: 8px 12px;
-  margin-top: 8px;
+  padding: 8px 6px;
+  margin-right: 8px;
   cursor: pointer;
   width: 100%;
 }

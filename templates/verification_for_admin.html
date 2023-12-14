@@ -8,19 +8,39 @@
   href="{{ url_for('static', filename='css/verification_for_admin.css') }}"
 />
 {% endblock style %} {% block content_of_admin_dashboard %}
-<!-- <p>{{accounts_verification}}</p> -->
-{% for account in accounts_verification %}
-<section>
-  <div class="card">
-    <h2>
-      User: {{ account.first_name }} {{ account.middle_name }} {{
-      account.last_name }}
-    </h2>
-    <p>Email: {{ account.email }}</p>
-    <p>Role: {{ account.role }}</p>
-    <p>ID: {{ account.id }}</p>
-    <button class="btn-approve">Approve</button>
-    <button class="btn-decline">Decline</button>
-  </div>
-</section>
-{% endfor %} {% endblock content_of_admin_dashboard %}
+<form action="{{ url_for('verification_for_admin') }}" method="post">
+  <section>
+    {% for account in accounts_verification %}
+    <div class="card">
+      <div class="details">
+        <h2>
+          User: {{ account.first_name }} {{ account.middle_name }} {{
+          account.last_name }}
+        </h2>
+        <p>Email: {{ account.email }}</p>
+        <p>Role: {{ account.role }}</p>
+        <p>ID: {{ account.id }}</p>
+      </div>
+      <div class="buttons">
+        <button
+          class="btn-approve"
+          type="submit"
+          name="action"
+          value="verify_{{ account.id }}"
+        >
+          Approve
+        </button>
+        <button
+          class="btn-decline"
+          type="submit"
+          name="action"
+          value="reject_{{ account.id }}"
+        >
+          Decline
+        </button>
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+</form>
+{% endblock content_of_admin_dashboard %}
