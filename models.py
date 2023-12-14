@@ -5,6 +5,14 @@ from datetime import datetime
 db = SQLAlchemy()
 
 
+
+student_attendance = db.Table(
+    "student_attendance",
+    db.Column("student_id", db.Integer, db.ForeignKey("student.id"), primary_key=True),
+    db.Column("lecture_id", db.Integer, db.ForeignKey("lecture.id"), primary_key=True),
+    db.Column("attended", db.Boolean, default=False),
+)
+
 student_course = db.Table("student_course",
     db.Column("student_id", db.Integer, db.ForeignKey("student.id"), primary_key=True),
     db.Column("course_id", db.Integer, db.ForeignKey("course.id"), primary_key=True)
@@ -16,6 +24,15 @@ student_assignment=db.Table("student_assignment",
 
 )
 
+class Lecture(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    start_time = db.Column(db.DateTime)
+    end_time = db.Column(db.DateTime)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+    # professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'))
+    # Relationships
+    students_attendance = db.relationship('Student', secondary='student_attendance', back_populates='lectures_attendance')
 class Assignment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
@@ -29,8 +46,22 @@ class Assignment(db.Model):
     students = db.relationship('Student', secondary='student_assignment', back_populates='assignments')
 
 
+def sign_attendance(student_id, lecture_id):
+    with current_app.app_context():
+        student = get_student_by_id(student_id)
+        lecture = get_lecture_by_id(lecture_id)
 
+        if student and lecture:
+            student.lectures_attendance.append(lecture)
+            db.session.commit()
 
+def view_student_attendance(student_id):
+    with current_app.app_context():
+        student = get_student_by_id(student_id)
+
+        if student:
+            return student.lectures_attendance
+        return []
 
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -47,6 +78,8 @@ class Student(db.Model):
     is_verified=db.Column(db.Boolean,default=False)
     
     assignments = db.relationship('Assignment', secondary='student_assignment', back_populates='students')
+    
+    lectures_attendance = db.relationship('Lecture', secondary='student_attendance', back_populates='students_attendance')
 
     courses = db.relationship("Course", secondary=student_course, backref="students")
 
@@ -99,6 +132,15 @@ class Admin(db.Model):
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(100))
     is_verified=db.Column(db.Boolean,default=True)
+
+
+def get_lecture_by_id(lecture_id):
+    with current_app.app_context():
+        lecture = Lecture.query.filter_by(id=lecture_id).first()
+    return lecture
+
+
+
 
 def get_students():
     with current_app.app_context():

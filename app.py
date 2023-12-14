@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session,flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from datetime import datetime
 from models import *
 
@@ -7,6 +7,8 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Tables.db"
 app.config["SECRET_KEY"] = "your_secret_key"
 db.init_app(app)
+
+accounts = []
 
 
 @app.route("/")
@@ -62,25 +64,40 @@ def sign_up():
 @app.route("/sign_up_for_students", methods=["GET", "POST"])
 def sign_up_for_students():
     if request.method == "POST":
-        s = Student(
-            first_name=request.form["first-name"],
-            middle_name=request.form["middle-name"],
-            last_name=request.form["last-name"],
-            contact_number=request.form["contact-number"],
-            national_id=request.form["national-id"],
-            email=request.form["email"],
-            date_of_birth=request.form["date-of-birth"],
-            gender=request.form["gender"],
-            class_level=request.form["class_level"],
-            password=request.form["password"],
+        # s = Student(
+        #     first_name=request.form["first-name"],
+        #     middle_name=request.form["middle-name"],
+        #     last_name=request.form["last-name"],
+        #     contact_number=request.form["contact-number"],
+        #     national_id=request.form["national-id"],
+        #     email=request.form["email"],
+        #     date_of_birth=request.form["date-of-birth"],
+        #     gender=request.form["gender"],
+        #     class_level=request.form["class_level"],
+        #     password=request.form["password"],
+        # )
+        account = Student(
+            first_name=request.form.get("first-name"),
+            middle_name=request.form.get("middle-name"),
+            last_name=request.form.get("last-name"),
+            contact_number=request.form.get("contact-number"),
+            national_id=request.form.get("national-id"),
+            email=request.form.get("email"),
+            date_of_birth=request.form.get("date-of-birth"),
+            gender=request.form.get("gender"),
+            class_level=request.form.get("class_level"),
+            password=request.form.get("password"),
         )
-        db.session.add(s)
+
+        db.session.add(account)
         db.session.commit()
-    return render_template("sign_up_for_students.html")
+        accounts.append(account)
+    return render_template("sign_up_for_students.html", accounts=accounts)
 
 
 @app.route("/sign_up_for_ass_prof", methods=["GET", "POST"])
 def sign_up_for_ass_prof():
+<<<<<<< HEAD
     if request.method == "POST":
         a = Assistant(
             first_name=request.form["first-name"],
@@ -116,10 +133,46 @@ def sign_up_for_prof():
         db.session.add(p)
         db.session.commit()
         return redirect(url_for("index"))
+=======
+    account = Assistant(
+        first_name=request.form.get("first-name"),
+        middle_name=request.form.get("middle-name"),
+        last_name=request.form.get("last-name"),
+        contact_number=request.form.get("contact-number"),
+        national_id=request.form.get("national-id"),
+        email=request.form.get("email"),
+        date_of_birth=request.form.get("date-of-birth"),
+        gender=request.form.get("gender"),
+        class_level=request.form.get("class_level"),
+        password=request.form.get("password"),
+    )
+    db.session.add(account)
+    db.session.commit()
+    accounts.append(account)
+    return render_template("sign_up_for_ass_prof.html", accounts=accounts)
+
+@app.route("/sign_up_for_prof", methods=["GET", "POST"])
+def sign_up_for_prof():
+    account = Professor(
+        first_name=request.form.get("first-name"),
+        middle_name=request.form.get("middle-name"),
+        last_name=request.form.get("last-name"),
+        contact_number=request.form.get("contact-number"),
+        national_id=request.form.get("national-id"),
+        email=request.form.get("email"),
+        date_of_birth=request.form.get("date-of-birth"),
+        gender=request.form.get("gender"),
+        class_level=request.form.get("class_level"),
+        password=request.form.get("password"),
+    )
+    db.session.add(account)
+    db.session.commit()
+    accounts.append(account)
+>>>>>>> 9a9a9f92bd8054d8fa3e6312f6d4d77b473b8b24
     return render_template("sign_up_for_prof.html")
 
-
 # ... (previous code)
+
 
 @app.route("/admin_dashboard", methods=["GET", "POST"])
 def admin_dashboard():
@@ -157,11 +210,11 @@ def admin_dashboard():
 
         elif action == "add_course":
             course_name = request.form.get("course_name")
-            hours=request.form.get("course_hours")
+            hours = request.form.get("course_hours")
 
             new_course = Course(
                 name=course_name,
-                description=course_description,
+                hours=hours,
             )
             db.session.add(new_course)
             db.session.commit()
@@ -177,12 +230,11 @@ def admin_dashboard():
         unverified_students=unverified_students,
         unverified_professors=unverified_professors,
         unverified_assistants=unverified_assistants,
-        student=Student,
-        professor=Professor,
-        assistant=Assistant,
+        accounts=accounts,
         admin=Admin,
-        courses=courses
+        courses=courses,
     )
+
 
 
 @app.route("/student_dashboard")
@@ -191,13 +243,12 @@ def student_dashboard():
     return render_template("student_dashboard.html")
 
 
-@app.route("/courses_for_student")
+app.route("/courses_for_student")
 def courses_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-
-    return render_template("courses_for_student.html", student=Student,admin=Admin,courses=Course)
+        return render_template("courses_for_student.html", student=student, admin=Admin, courses=Course)
 
     # Redirect to login if the user is not logged in
     return redirect(url_for("log_in"))
@@ -208,7 +259,7 @@ def timetable_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-    return render_template("timetable_for_student.html",student=student)
+    return render_template("timetable_for_student.html", student=student)
 
 
 @app.route("/assignment_for_student")
@@ -216,7 +267,7 @@ def assignment_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-    return render_template("assignment_for_student.html",student=student)
+    return render_template("assignment_for_student.html", student=Student)
 
 
 @app.route("/attendance_for_student")
@@ -224,7 +275,7 @@ def attendance_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-    return render_template("attendance_for_student.html",student=student)
+    return render_template("attendance_for_student.html", student=Student)
 
 
 @app.route("/professor_dashboard")
@@ -232,15 +283,48 @@ def professor_dashboard():
     professor_id = session.get("user_id")
     if professor_id is not None:
         professor = get_prof_by_id(professor_id)
-    return render_template("professor_dashboard.html",professor=professor)
+    return render_template("professor_dashboard.html", professor=Professor)
 
 
 @app.route("/assistant_dashboard")
 def assistant_dashboard():
     assistant_id = session.get("user_id")
     if assistant_id is not None:
-        assistant = get_asst_by_id(student_id)
-    return render_template("ass_professor_dashboard.html",assistant=assistant)
+        assistant = get_asst_by_id(assistant_id)
+    return render_template("ass_professor_dashboard.html", assistant=Assistant)
+
+
+@app.route("/verification_for_admin")
+def verification_for_admin():
+    # Add logic to display student-specific data
+    return render_template("verification_for_admin.html")
+
+
+
+@app.route("/courses_for_admin")
+def courses_for_admin():
+    # Add logic to display student-specific data
+    return render_template("courses_for_admin.html")
+
+
+@app.route("/timetable_for_admin")
+def timetable_for_admin():
+    # Your view function code here
+    return render_template("timetable_for_admin.html")
+
+@app.route("/profs_for_admin")
+def profs_for_admin():
+    # Add logic to display student-specific data
+    return render_template("profs_for_admin.html")
+
+@app.route("/ass_prof_for_admin")
+def ass_prof_for_admin():
+    # Add logic to display student-specific data
+    return render_template("ass_prof_for_admin.html")
+
+@app.route("/students_for_admin")
+def students_for_admin():
+    return render_template("students_for_admin.html")
 
 
 if __name__ == "__main__":

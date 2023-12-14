@@ -1,6 +1,7 @@
 /* Global Rules */
 :root {
   --main-color: #ffa62b; /* Primary Color */
+  --seven-color: #e19326; /* Primary Color */
   --second-color: #000000; /* Primary Text */
   --third-color: #4d4d4d; /* Secondary Text */
   --forth-color: #161616; /* Footer Color */
@@ -27,4 +28,60 @@ body {
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   border-radius: 10px;
+}
+
+.student-assignment {
+  color: #333;
+  text-align: center;
+}
+
+.assignment-content-container {
+  background-color: var(--fifth-color);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.assignment-content-container p {
+  margin: 5px 0;
+}
+
+.assignment-content-container a {
+  color: var(--main-color);
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.upload-form {
+  background-color: var(--fifth-color);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.upload-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.upload-form input[type="file"],
+.upload-form input[type="submit"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.upload-form input[type="submit"] {
+  background-color: var(--main-color);
+  color: var(--fifth-color);
+  cursor: pointer;
+}
+
+.upload-form input[type="submit"]:hover {
+  background-color: var(--seven-color);
 }
