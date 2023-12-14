@@ -87,14 +87,9 @@ def sign_up_for_students():
             class_level=request.form.get("class_level"),
             password=request.form.get("password"),
         )
-<<<<<<< HEAD
-        db.session.add(s)
-        Acounts.append(s)
-=======
 
         
         db.session.add(account)
->>>>>>> 0bd65ac3eb53592e8202ff69bdf48671be8f0d57
         db.session.commit()
         accounts.append(account)
     return render_template("sign_up_for_students.html",A)
