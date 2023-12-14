@@ -14,66 +14,31 @@
 
 <div class="container">
   <!-- Course cards -->
-  <a href="course1.html" class="course-card">
+  {% if course %} {% for one_course in course %}
+  <a href="#" class="course-card">
     <div>
-      <h2>Course Title 1</h2>
+      <h2>{{ one_course.name }}</h2>
       <div class="course-details">
         <p>Description of the course goes here. This is a sample text.</p>
-        <p><strong>Instructor:</strong> John Doe</p>
+        <p><strong>Instructor:</strong> {{one_course.professor}}</p>
       </div>
     </div>
   </a>
-
-  <!-- Add more course cards -->
-  <!-- Repeat the structure of course cards for additional courses -->
-  <a href="course2.html" class="course-card">
-    <div>
-      <h2>Course Title 2</h2>
-      <div class="course-details">
-        <p>Description of the course goes here. This is a sample text.</p>
-        <p><strong>Instructor:</strong> Jane Smith</p>
-      </div>
-    </div>
-  </a>
-
-  <a href="course3.html" class="course-card">
-    <div>
-      <h2>Course Title 3</h2>
-      <div class="course-details">
-        <p>Description of the course goes here. This is a sample text.</p>
-        <p><strong>Instructor:</strong> Alex Johnson</p>
-      </div>
-    </div>
-  </a>
-
-  <a href="course4.html" class="course-card">
-    <div>
-      <h2>Course Title 4</h2>
-      <div class="course-details">
-        <p>Description of the course goes here. This is a sample text.</p>
-        <p><strong>Instructor:</strong> Emily Clark</p>
-      </div>
-    </div>
-  </a>
-
-  <a href="course5.html" class="course-card">
-    <div>
-      <h2>Course Title 5</h2>
-      <div class="course-details">
-        <p>Description of the course goes here. This is a sample text.</p>
-        <p><strong>Instructor:</strong> David Brown</p>
-      </div>
-    </div>
-  </a>
-
-  <a href="course6.html" class="course-card">
-    <div>
-      <h2>Course Title 6</h2>
-      <div class="course-details">
-        <p>Description of the course goes here. This is a sample text.</p>
-        <p><strong>Instructor:</strong> Sarah Johnson</p>
-      </div>
+  {% endfor %}
+  <a href="#" class="add-course-link">
+    <div class="add-course-card">
+      <h2>Add a New Course</h2>
+      <!-- Add form elements for adding a new course -->
     </div>
   </a>
 </div>
-{% endblock content_of_admin_dashboard %}
+{% else %}
+<div class="container">
+  <a href="#" class="add-course-link">
+    <div class="add-course-card">
+      <h2>Add a New Course</h2>
+      <!-- Add form elements for adding a new course -->
+    </div>
+  </a>
+</div>
+{% endif %} {% endblock content_of_admin_dashboard %}
