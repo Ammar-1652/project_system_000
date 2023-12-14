@@ -263,6 +263,7 @@ def courses_for_admin():
         add_course(name, hours,is_with_lab)
         course_show = Course.query.all()
     c=None
+    course_show = None
     if request.method == 'POST':
         c = Course(hour=request.form.get('hour'), day=request.form.get('day'))
         db.session.add(c)
