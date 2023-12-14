@@ -175,7 +175,6 @@ def admin_dashboard():
     unverified_students = Student.query.filter_by(is_verified=False).all()
     unverified_professors = Professor.query.filter_by(is_verified=False).all()
     unverified_assistants = Assistant.query.filter_by(is_verified=False).all()
-    courses = Course.query.all()
 
     return render_template(
         "admin_dashboard.html",
@@ -184,7 +183,6 @@ def admin_dashboard():
         unverified_assistants=unverified_assistants,
         accounts=accounts,
         admin=Admin,
-        courses=courses,
     )
 
 
