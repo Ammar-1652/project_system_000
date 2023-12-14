@@ -85,43 +85,44 @@ def sign_up_for_students():
 
 @app.route("/sign_up_for_ass_prof", methods=["GET", "POST"])
 def sign_up_for_ass_prof():
-    if request.method == "POST":
-        account = Assistant(
-            first_name=request.form["first-name"],
-            middle_name=request.form["middle-name"],
-            last_name=request.form["last-name"],
-            contact_number=request.form["contact-number"],
-            national_id=request.form["national-id"],
-            email=request.form["email"],
-            date_of_birth=request.form["date-of-birth"],
-            gender=request.form["gender"],
-            password=request.form["password"],
-        )
-        db.session.add(account)
-        db.session.commit()
-        accounts.append(account)
-    return render_template("sign_up_for_ass_prof.html",accounts=accounts)
+    account = Assistant(
+        first_name=request.form.get("first-name"),
+        middle_name=request.form.get("middle-name"),
+        last_name=request.form.get("last-name"),
+        contact_number=request.form.get("contact-number"),
+        national_id=request.form.get("national-id"),
+        email=request.form.get("email"),
+        date_of_birth=request.form.get("date-of-birth"),
+        gender=request.form.get("gender"),
+        class_level=request.form.get("class_level"),
+        password=request.form.get("password"),
+    )
+    db.session.add(account)
+    db.session.commit()
+    accounts.append(account)
+    return render_template("sign_up_for_ass_prof.html", accounts=accounts)
 
 
 @app.route("/sign_up_for_prof", methods=["GET", "POST"])
 def sign_up_for_prof():
-    if request.method == "POST":
-        account = Professor(
-            first_name=request.form["first-name"],
-            middle_name=request.form["middle-name"],
-            last_name=request.form["last-name"],
-            contact_number=request.form["contact-number"],
-            national_id=request.form["national-id"],
-            email=request.form["email"],
-            date_of_birth=request.form["date-of-birth"],
-            gender=request.form["gender"],
-            password=request.form["password"],
-        )
-        db.session.add(account)
-        db.session.commit()
-        accounts.append(account)
-        
-    return render_template("sign_up_for_prof.html", accounts=accounts)
+    account = Professor(
+        first_name=request.form.get("first-name"),
+        middle_name=request.form.get("middle-name"),
+        last_name=request.form.get("last-name"),
+        contact_number=request.form.get("contact-number"),
+        national_id=request.form.get("national-id"),
+        email=request.form.get("email"),
+        date_of_birth=request.form.get("date-of-birth"),
+        gender=request.form.get("gender"),
+        class_level=request.form.get("class_level"),
+        password=request.form.get("password"),
+    )
+    db.session.add(account)
+    db.session.commit()
+    accounts.append(account)
+    return render_template("sign_up_for_prof.html")
+
+# ... (previous code)
 
 
 @app.route("/admin_dashboard", methods=["GET", "POST"])
@@ -186,7 +187,6 @@ def admin_dashboard():
     )
 
 
-
 @app.route("/student_dashboard")
 def student_dashboard():
     # Add logic to display student-specific data
@@ -194,11 +194,13 @@ def student_dashboard():
 
 
 app.route("/courses_for_student")
+
+
 def courses_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-    return render_template("courses_for_student.html", student=student)
+        return render_template("courses_for_student.html", student=student, admin=Admin, courses=Course)
 
     # Redirect to login if the user is not logged in
     return redirect(url_for("log_in"))
@@ -250,7 +252,6 @@ def verification_for_admin():
     return render_template("verification_for_admin.html")
 
 
-
 @app.route("/courses_for_admin")
 def courses_for_admin():
     # Add logic to display student-specific data
@@ -262,15 +263,18 @@ def timetable_for_admin():
     # Your view function code here
     return render_template("timetable_for_admin.html")
 
+
 @app.route("/profs_for_admin")
 def profs_for_admin():
     # Add logic to display student-specific data
     return render_template("profs_for_admin.html")
 
+
 @app.route("/ass_prof_for_admin")
 def ass_prof_for_admin():
     # Add logic to display student-specific data
     return render_template("ass_prof_for_admin.html")
+
 
 @app.route("/students_for_admin")
 def students_for_admin():
