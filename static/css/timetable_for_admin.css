@@ -1,0 +1,11 @@
+.big-container .first-column-container div a.timetable-link {
+  padding-left: 15px;
+  background-color: var(--main-color);
+  color: var(--second-color);
+  width: fit-content;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+}
