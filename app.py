@@ -270,6 +270,8 @@ def ass_prof_for_admin():
 
 @app.route("/students_for_admin")
 def students_for_admin():
+    get_student_by_id()
+    get_asst_by_national_id()
     return render_template("students_for_admin.html")
 
 
