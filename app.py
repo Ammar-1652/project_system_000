@@ -286,11 +286,10 @@ def ass_prof_for_admin():
 
 @app.route("/students_for_admin")
 def students_for_admin():
-    student_id=request.form['student_id']
-    students=Student.query.all()
-    student=Student.get_student_by_id(student)
-    return render_template("students_for_admin.html",student=student,students=students)
-
+    student_id = request.args.get('student_id')
+    students = Student.query.all()
+    student = Student.get_student_by_id(student_id)
+    return render_template("students_for_admin.html", student=student, students=students)
 
 if __name__ == "__main__":
     with app.app_context():
