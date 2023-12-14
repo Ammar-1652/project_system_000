@@ -79,8 +79,8 @@ def sign_up_for_students():
 
         db.session.add(account)
         db.session.commit()
-        accounts.append(account)
-    return render_template("sign_up_for_students.html", accounts=accounts)
+        
+    return render_template("sign_up_for_students.html")
 
 
 @app.route("/sign_up_for_ass_prof", methods=["GET", "POST"])
@@ -205,7 +205,7 @@ def verification_for_admin():
     assts = Assistant.query.all()
 
     if request.method == "POST":
-        account_id = int(request.form.get("account_id"))
+        account_id = request.form.get("account_id")
         action = request.form.get("action")
 
         account = None
