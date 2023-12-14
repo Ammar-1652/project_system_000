@@ -202,9 +202,9 @@ def assistant_dashboard():
 def verification_for_admin():
     # Add logic to display student-specific data
     accounts_verification=[]
-    students=get_students()
-    profs=get_profs()
-    assts=get_assts()
+    students=Student.query.all()
+    profs=Professor.query.all()
+    assts=Assistant.query.all()
     for student in students:
         if student.is_verified==False:
             accounts_verification.append(student)
