@@ -88,7 +88,7 @@ body {
   margin: 15px 0 15px 15px;
 }
 
-.header-container input {
+/* .header-container input {
   padding: 12px;
   border-radius: 25px;
   border: 1px solid #ccc;
@@ -96,7 +96,7 @@ body {
   color: #555;
   font-size: 16px;
   outline: none;
-}
+} */
 
 .header-container input:focus {
   outline: var(--main-color) 2px solid;
@@ -157,6 +157,35 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+/* form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+} */
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: var(--main-color);
+  color: #fff;
+  border: 1px solid var(--main-color);
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+/* Optional: Add some styling for placeholder text */
+input::placeholder {
+  color: #999;
 }
 
 /* End Content */

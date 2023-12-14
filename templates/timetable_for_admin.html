@@ -7,5 +7,24 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/timetable_for_admin.css') }}"
 />
-{% endblock style %} {% block content_of_admin_dashboard %} {% endblock
-content_of_admin_dashboard %}
+{% endblock style %} {% block content_of_admin_dashboard %}
+<table border="1">
+  <tr>
+    <th></th>
+    <!-- Placeholder for the empty corner cell -->
+    {% for day in ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday',
+    'Thursday'] %}
+    <th>{{ day }}</th>
+    {% endfor %}
+  </tr>
+  {% for hour in [9, 11, 1, 3, 5] %}
+  <tr>
+    <td>{{ hour }}:00 - {{ hour+2 }}:00</td>
+    {% for day in [1, 2, 3, 4, 5, 6] %} {% set course = courses |
+    selectattr('day', 'eq', day) | selectattr('hour', 'eq', hour) | first %}
+    <td>{{ course.name if course else '' }}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+{% endblock content_of_admin_dashboard %}

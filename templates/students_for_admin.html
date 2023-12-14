@@ -7,5 +7,24 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/students_for_admin.css') }}"
 />
-{% endblock style %} {% block content_of_admin_dashboard %} {% endblock
-content_of_admin_dashboard %}
+{% endblock style %} {% block content_of_admin_dashboard %} {% block search %}
+<form action="{{ url_for('students_for_admin') }}" method="get">
+  <input
+    placeholder="🔍 Search by Student ID ..."
+    type="text"
+    name="student_id"
+    id="student_id"
+    value="{{ request.args.get('student_id', '') }}"
+  />
+  <button type="submit">Search</button>
+</form>
+{% endblock search %} {% for student in students %}
+<div class="student-card">
+  <h2 class="student-card-headline">
+    Name: {{ student.first_name }} {{ student.middle_name }} {{
+    student.last_name }}
+  </h2>
+  <p class="student-card-paragraph">ID Number: {{ student.id }}</p>
+  <p class="student-card-paragraph">{{ student.class_level }}</p>
+</div>
+{% endfor %} {% endblock content_of_admin_dashboard %}

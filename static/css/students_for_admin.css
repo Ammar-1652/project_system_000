@@ -9,3 +9,29 @@
   -o-border-radius: 10px;
   border-radius: 10px;
 }
+
+/* body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+} */
+
+.student-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin: 10px;
+  width: fit-content;
+}
+
+.student-card-headline {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.student-card-paragraph {
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-size: 15px;
+}

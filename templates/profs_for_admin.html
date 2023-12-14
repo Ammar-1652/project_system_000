@@ -7,5 +7,23 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/profs_for_admin.css') }}"
 />
-{% endblock style %} {% block content_of_admin_dashboard %} {% endblock
-content_of_admin_dashboard %}
+{% endblock style %} {% block content_of_admin_dashboard %} {% block search %}
+<form action="{{ url_for('profs_for_admin') }}" method="get">
+  <input
+    placeholder="🔍 Search by Professor ID ..."
+    type="text"
+    name="prof_id"
+    id="prof_id"
+    value="{{ request.args.get('prof_id', '') }}"
+  />
+  <button type="submit">Search</button>
+</form>
+{% endblock search %} {% for prof in profs %}
+<div class="student-card">
+  <h2 class="student-card-headline">
+    Name: {{ prof.first_name }} {{ prof.middle_name }} {{ prof.last_name }}
+  </h2>
+  <p class="student-card-paragraph">ID Number: {{ prof.id }}</p>
+  <p class="student-card-paragraph">{{ prof.contact_number }}</p>
+</div>
+{% endfor %} {% endblock content_of_admin_dashboard %}
