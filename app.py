@@ -118,11 +118,11 @@ def sign_up_for_prof():
             gender=request.form.get("gender"),
             password=request.form.get("password"),
         )
-        
+
         db.session.add(account)
         db.session.commit()
         accounts.append(account)
-    return render_template("sign_up_for_prof.html",accounts=accounts)
+    return render_template("sign_up_for_prof.html", accounts=accounts)
 
 
 # ... (previous code)
@@ -131,8 +131,7 @@ def sign_up_for_prof():
 @app.route("/admin_dashboard", methods=["GET", "POST"])
 def admin_dashboard():
     if request.method == "POST":
-
-        render_template ("admin_dashboard.html") 
+        render_template("admin_dashboard.html")
 
 
 @app.route("/student_dashboard")
@@ -200,30 +199,32 @@ def assistant_dashboard():
 
 @app.route("/verification_for_admin")
 def verification_for_admin():
+    global accounts
     # Add logic to display student-specific data
+
     accounts_verification=[]
     students=Student.query.all()
     profs=Professor.query.all()
     assts=Assistant.query.all()
     for student in students:
-        if student.is_verified==False:
+        if student.is_verified == False:
             accounts_verification.append(student)
         else:
             pass
     for prof in profs:
-        if prof.is_verified==False:
+        if prof.is_verified == False:
             accounts_verification.append(prof)
         else:
             pass
         for asst in assts:
-            if asst.is_verified==False:
+            if asst.is_verified == False:
                 accounts_verification.append(asst)
             else:
                 pass
 
-    
-    
-    return render_template("verification_for_admin.html" ,accounts_verification=accounts_verification)
+    return render_template(
+        "verification_for_admin.html", accounts_verification=accounts_verification
+    )
 
 
 @app.route("/courses_for_admin")
