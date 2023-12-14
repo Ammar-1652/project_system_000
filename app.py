@@ -267,7 +267,7 @@ def courses_for_admin():
         c = Course(hour=request.form.get('hour'), day=request.form.get('day'))
         db.session.add(c)
         db.session.commit()
-    return render_template("courses_for_admin.html", course=c, course_show=course_show)
+    return render_template("courses_for_admin.html", c=course, course_show=course_show)
 
 
 @app.route("/timetable_for_admin")
