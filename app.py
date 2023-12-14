@@ -197,35 +197,47 @@ def assistant_dashboard():
     return render_template("ass_professor_dashboard.html", assistant=Assistant)
 
 
-@app.route("/verification_for_admin")
+@app.route("/verification_for_admin", methods=["GET", "POST"])
 def verification_for_admin():
-    global accounts
-    # Add logic to display student-specific data
+    accounts_verification = []
+    students = Student.query.all()
+    profs = Professor.query.all()
+    assts = Assistant.query.all()
 
-    accounts_verification=[]
-    students=Student.query.all()
-    profs=Professor.query.all()
-    assts=Assistant.query.all()
+    if request.method == "POST":
+        account_id = int(request.form.get("account_id"))
+        action = request.form.get("action")
+
+        account = None
+
+        # Try to find the account in each table
+        account = Student.query.get(account_id) or \
+                Professor.query.get(account_id) or \
+                Assistant.query.get(account_id)
+
+        if account:
+            if action == "verify":
+                account.is_verified = True
+            elif action == "reject":
+                db.session.delete(account)
+
+            db.session.commit()
+
     for student in students:
-        if student.is_verified == False:
+        if not student.is_verified:
             accounts_verification.append(student)
-        else:
-            pass
+
     for prof in profs:
-        if prof.is_verified == False:
+        if not prof.is_verified:
             accounts_verification.append(prof)
-        else:
-            pass
-        for asst in assts:
-            if asst.is_verified == False:
-                accounts_verification.append(asst)
-            else:
-                pass
+
+    for asst in assts:
+        if not asst.is_verified:
+            accounts_verification.append(asst)
 
     return render_template(
         "verification_for_admin.html", accounts_verification=accounts_verification
     )
-
 
 @app.route("/courses_for_admin")
 def courses_for_admin():
