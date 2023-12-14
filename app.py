@@ -97,7 +97,6 @@ def sign_up_for_students():
 
 @app.route("/sign_up_for_ass_prof", methods=["GET", "POST"])
 def sign_up_for_ass_prof():
-<<<<<<< HEAD
     if request.method == "POST":
         a = Assistant(
             first_name=request.form["first-name"],
@@ -133,7 +132,6 @@ def sign_up_for_prof():
         db.session.add(p)
         db.session.commit()
         return redirect(url_for("index"))
-=======
     account = Assistant(
         first_name=request.form.get("first-name"),
         middle_name=request.form.get("middle-name"),
@@ -150,6 +148,7 @@ def sign_up_for_prof():
     db.session.commit()
     accounts.append(account)
     return render_template("sign_up_for_ass_prof.html", accounts=accounts)
+
 
 @app.route("/sign_up_for_prof", methods=["GET", "POST"])
 def sign_up_for_prof():
@@ -168,8 +167,8 @@ def sign_up_for_prof():
     db.session.add(account)
     db.session.commit()
     accounts.append(account)
->>>>>>> 9a9a9f92bd8054d8fa3e6312f6d4d77b473b8b24
     return render_template("sign_up_for_prof.html")
+
 
 # ... (previous code)
 
@@ -236,7 +235,6 @@ def admin_dashboard():
     )
 
 
-
 @app.route("/student_dashboard")
 def student_dashboard():
     # Add logic to display student-specific data
@@ -244,11 +242,15 @@ def student_dashboard():
 
 
 app.route("/courses_for_student")
+
+
 def courses_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-        return render_template("courses_for_student.html", student=student, admin=Admin, courses=Course)
+        return render_template(
+            "courses_for_student.html", student=student, admin=Admin, courses=Course
+        )
 
     # Redirect to login if the user is not logged in
     return redirect(url_for("log_in"))
@@ -300,7 +302,6 @@ def verification_for_admin():
     return render_template("verification_for_admin.html")
 
 
-
 @app.route("/courses_for_admin")
 def courses_for_admin():
     # Add logic to display student-specific data
@@ -312,15 +313,18 @@ def timetable_for_admin():
     # Your view function code here
     return render_template("timetable_for_admin.html")
 
+
 @app.route("/profs_for_admin")
 def profs_for_admin():
     # Add logic to display student-specific data
     return render_template("profs_for_admin.html")
 
+
 @app.route("/ass_prof_for_admin")
 def ass_prof_for_admin():
     # Add logic to display student-specific data
     return render_template("ass_prof_for_admin.html")
+
 
 @app.route("/students_for_admin")
 def students_for_admin():
