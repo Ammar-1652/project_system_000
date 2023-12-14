@@ -288,7 +288,7 @@ def profs_for_admin():
 def ass_prof_for_admin():
     asst_id=request.args.get('asst_id')
     assts=Assistant.query.all()
-    asst=Assistant.get_student_by_id(asst_id)
+    asst=get_asst_by_id(asst_id)
     # Add logic to display student-specific data
     return render_template("ass_prof_for_admin.html",asst=asst,assts=assts)
 
