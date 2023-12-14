@@ -7,12 +7,13 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/verification_for_admin.css') }}"
 />
-{% endblock style %} {%block content_of_admin_dashboard %} {% for account in
-accounts %}
+{% endblock style %} {% block content_of_admin_dashboard %}
+<!-- <p>{{accounts_verification}}</p> -->
+{% for account in accounts_verification %}
 <section>
   <div class="card">
     <h2>
-      User: {{ account.first_name }} + {{ account.middle_name }} + {{
+      User: {{ account.first_name }} {{ account.middle_name }} {{
       account.last_name }}
     </h2>
     <p>Email: {{ account.email }}</p>

@@ -36,7 +36,7 @@ def log_in():
         student = Student.query.filter_by(email=email, password=password).first()
         professor = Professor.query.filter_by(email=email, password=password).first()
         assistant = Assistant.query.filter_by(email=email, password=password).first()
-        admin = Admin.query.filter_by(email=email, password=password).first()
+        admin = Admin.query.filter_by(email="admin@gmail.com", password="admin").first()
 
         if student:
             session["user_id"] = student.id
@@ -48,7 +48,7 @@ def log_in():
             return redirect("/assistant_dashboard")
 
         elif admin:
-            return redirect("/admin_dashboard")
+            return redirect("/verification_for_admin")
 
         else:
             return "Invalid email or password"
@@ -95,7 +95,6 @@ def sign_up_for_ass_prof():
             email=request.form.get("email"),
             date_of_birth=request.form.get("date-of-birth"),
             gender=request.form.get("gender"),
-            class_level=request.form.get("class_level"),
             password=request.form.get("password"),
         )
 
@@ -117,14 +116,13 @@ def sign_up_for_prof():
             email=request.form.get("email"),
             date_of_birth=request.form.get("date-of-birth"),
             gender=request.form.get("gender"),
-            class_level=request.form.get("class_level"),
             password=request.form.get("password"),
         )
-        
+
         db.session.add(account)
         db.session.commit()
         accounts.append(account)
-    return render_template("sign_up_for_prof.html",accounts=accounts)
+    return render_template("sign_up_for_prof.html", accounts=accounts)
 
 
 # ... (previous code)
@@ -133,8 +131,7 @@ def sign_up_for_prof():
 @app.route("/admin_dashboard", methods=["GET", "POST"])
 def admin_dashboard():
     if request.method == "POST":
-
-        render_template ("admin_dashboard.html") 
+        render_template("admin_dashboard.html")
 
 
 @app.route("/student_dashboard")
@@ -189,7 +186,7 @@ def professor_dashboard():
     professor_id = session.get("user_id")
     if professor_id is not None:
         professor = get_prof_by_id(professor_id)
-    return render_template("professor_dashboard.html", professor=Professor)
+    return render_template("prof_dashboard.html", professor=professor)
 
 
 @app.route("/assistant_dashboard")
@@ -202,8 +199,32 @@ def assistant_dashboard():
 
 @app.route("/verification_for_admin")
 def verification_for_admin():
+    global accounts
     # Add logic to display student-specific data
-    return render_template("verification_for_admin.html" ,accounts=accounts)
+
+    accounts_verification=[]
+    students=Student.query.all()
+    profs=Professor.query.all()
+    assts=Assistant.query.all()
+    for student in students:
+        if student.is_verified == False:
+            accounts_verification.append(student)
+        else:
+            pass
+    for prof in profs:
+        if prof.is_verified == False:
+            accounts_verification.append(prof)
+        else:
+            pass
+        for asst in assts:
+            if asst.is_verified == False:
+                accounts_verification.append(asst)
+            else:
+                pass
+
+    return render_template(
+        "verification_for_admin.html", accounts_verification=accounts_verification
+    )
 
 
 @app.route("/courses_for_admin")
