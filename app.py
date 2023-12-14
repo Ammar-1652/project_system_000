@@ -280,7 +280,7 @@ def timetable_for_admin():
 def profs_for_admin():
     prof_id=request.args.get('prof_id')
     profs=Professor.query.all()
-    prof=Professor.get_student_by_id(prof_id)
+    prof=get_prof_by_id(prof_id)
     return render_template("profs_for_admin.html",profs=profs ,prof=prof)
 
 
