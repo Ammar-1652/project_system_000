@@ -1,102 +1,86 @@
-# logic.py
-from models import *
-# A dictionary to store the lectures and their teachers
-lectures =Lecture.query.all()
+# attendance_logic.py
 
-# A dictionary to store the students and their courses
-students = Student.query.all()
+from models import Lecture, Student, Professor
+from flask import current_app, flash
 
-# A dictionary to store the attendance records for each lecture
-attendance = {}
+def open_attendance(lecture_title):
+    with current_app.app_context():
+        lecture = Lecture.query.filter_by(title=lecture_title).first()
+        if lecture:
+            # Check if attendance is already open
+            if not lecture.attendance_open:
+                lecture.attendance_open = True
+                lecture.save()
+                flash(f"Attendance is now open for {lecture_title}", 'success')
+            else:
+                flash(f"Attendance is already open for {lecture_title}", 'info')
+        else:
+            flash("Invalid lecture title.", 'danger')
 
-# A function to open the attendance for a lecture
-def open_attendance(lecture):
-    # Check if the lecture is valid
-    if lecture not in lectures:
-        print("Invalid lecture name.")
-        return
+def close_attendance(lecture_title):
+    with current_app.app_context():
+        lecture = Lecture.query.filter_by(title=lecture_title).first()
+        if lecture:
+            # Check if attendance is open
+            if lecture.attendance_open:
+                lecture.attendance_open = False
+                lecture.save()
+                flash(f"Attendance is now closed for {lecture_title}", 'success')
+            else:
+                flash(f"Attendance is not open for {lecture_title}", 'info')
+        else:
+            flash("Invalid lecture title.", 'danger')
 
-    # Check if the attendance is already open
-    if lecture in attendance:
-        print("Attendance is already open for this lecture.")
-        return
+def sign_attendance(student_name, lecture_title):
+    with current_app.app_context():
+        student = Student.query.filter_by(first_name=student_name).first()
+        lecture = Lecture.query.filter_by(title=lecture_title).first()
 
-    # Create a new entry in the attendance dictionary
-    attendance[lecture] = []
-    print("Attendance is now open for", lecture)
+        if student and lecture:
+            # Check if the student is enrolled in the lecture
+            if lecture in student.lectures_attendance:
+                # Check if attendance is open
+                if lecture.attendance_open:
+                    # Check if the student has already signed the attendance
+                    if student not in lecture.students_attendance:
+                        lecture.students_attendance.append(student)
+                        lecture.save()
+                        flash(f"You have successfully signed the attendance for {lecture_title}", 'success')
+                    else:
+                        flash(f"You have already signed the attendance for {lecture_title}", 'info')
+                else:
+                    flash(f"Attendance is not open for {lecture_title}", 'info')
+            else:
+                flash(f"You are not enrolled in {lecture_title}", 'danger')
+        else:
+            flash("Invalid student or lecture.", 'danger')
 
-# A function to close the attendance for a lecture
-def close_attendance(lecture):
-    # Check if the lecture is valid
-    if lecture not in lectures:
-        print("Invalid lecture name.")
-        return
+def view_professor_records(professor_name):
+    with current_app.app_context():
+        lectures_taught = Lecture.query.filter_by(professor_id=professor_name).all()
+        records = []
 
-    # Check if the attendance is open
-    if lecture not in attendance:
-        print("Attendance is not open for this lecture.")
-        return
+        for lecture in lectures_taught:
+            records.append({
+                'lecture_title': lecture.title,
+                'students_attendance': [student.first_name for student in lecture.students_attendance]
+            })
 
-    # Remove the entry from the attendance dictionary
-    record = attendance.pop(lecture)
-    print("Attendance is now closed for", lecture)
-    print("The following students attended the lecture:", ", ".join(record))
+        return records
 
-# A function to sign the attendance for a lecture
-def sign_attendance(student, lecture):
-    # Check if the student is valid
-    if student not in students:
-        print("Invalid student name.")
-        return
+def view_student_records(student_name):
+    with current_app.app_context():
+        student = Student.query.filter_by(first_name=student_name).first()
 
-    # Check if the lecture is valid
-    if lecture not in lectures:
-        print("Invalid lecture name.")
-        return
+        if student:
+            records = []
 
-    # Check if the student is enrolled in the lecture
-    if lecture not in students[student]:
-        print("You are not enrolled in this lecture.")
-        return
+            for lecture in student.lectures_attendance:
+                if student in lecture.students_attendance:
+                    records.append({'lecture_title': lecture.title, 'status': 'Present'})
+                else:
+                    records.append({'lecture_title': lecture.title, 'status': 'Absent'})
 
-    # Check if the attendance is open
-    if lecture not in attendance:
-        print("Attendance is not open for this lecture.")
-        return
-
-    # Check if the student has already signed the attendance
-    if student in attendance[lecture]:
-        print("You have already signed the attendance for this lecture.")
-        return
-
-    # Add the student to the attendance list
-    attendance[lecture].append(student)
-    print("You have successfully signed the attendance for", lecture)
-
-# A function to view the attendance records for a teacher
-def view_teacher_records(teacher):
-    # Check if the teacher is valid
-    if teacher not in lectures.values():
-        print("Invalid teacher name.")
-        return
-
-    # Print the attendance records for each lecture taught by the teacher
-    print("Attendance records for", teacher)
-    for lecture, record in attendance.items():
-        if lectures[lecture] == teacher:
-            print(lecture, ":", ", ".join(record))
-
-# A function to view the attendance records for a student
-def view_student_records(student):
-    # Check if the student is valid
-    if student not in students:
-        print("Invalid student name.")
-        return
-
-    # Print the attendance records for each lecture enrolled by the student
-    print("Attendance records for", student)
-    for lecture, record in attendance.items():
-        if student in record:
-            print(lecture, ": Present")
-        elif lecture in students[student]:
-            print(lecture, ": Absent")
+            return records
+        else:
+            flash("Invalid student name.", 'danger')
