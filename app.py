@@ -39,12 +39,19 @@ def log_in():
         admin = Admin.query.filter_by(email="admin@gmail.com", password="admin").first()
 
         if student:
-            session["user_id"] = student.id
-            return redirect(url_for("courses_for_student"))
+            session["user_id"] = student.id 
+            if student.is_verified==True:
+                return redirect(url_for("courses_for_student"))
         elif professor:
+            session["user_id"] = professor.id
+            if professor.is_verified==True:
+                return redirect(url_for("courses_for_professor"))
             return redirect("/professor_dashboard")
 
         elif assistant:
+            session["user_id"] = assistant.id
+            if assistant.is_verified==True:
+                return redirect(url_for("courses_for_assistant"))
             return redirect("/assistant_dashboard")
 
         elif admin:
@@ -101,7 +108,7 @@ def sign_up_for_ass_prof():
         db.session.add(account)
         db.session.commit()
         accounts.append(account)
-    return render_template("sign_up_for_ass_prof.html", accounts=accounts)
+    return render_template("sign_up_for_ass_prof.html")
 
 
 @app.route("/sign_up_for_prof", methods=["GET", "POST"])
@@ -121,8 +128,7 @@ def sign_up_for_prof():
 
         db.session.add(account)
         db.session.commit()
-        accounts.append(account)
-    return render_template("sign_up_for_prof.html", accounts=accounts)
+    return render_template("sign_up_for_prof.html")
 
 
 # ... (previous code)
@@ -209,7 +215,6 @@ def verification_for_admin():
         action = request.form.get("action")
 
         account = None
-
         # Try to find the account in each table
         account = Student.query.get(account_id) or \
                 Professor.query.get(account_id) or \
@@ -258,21 +263,27 @@ def timetable_for_admin():
 
 @app.route("/profs_for_admin")
 def profs_for_admin():
-    # Add logic to display student-specific data
-    return render_template("profs_for_admin.html")
+    prof_id=request.form['prof_id']
+    profs=Professor.query.all()
+    prof=Professor.get_student_by_id(prof_id)
+    return render_template("profs_for_admin.html",)
 
 
 @app.route("/ass_prof_for_admin")
 def ass_prof_for_admin():
+    asst_id=request.form['asst_id']
+    assts=Assistant.query.all()
+    asst=Assistant.get_student_by_id(asst_id)
     # Add logic to display student-specific data
-    return render_template("ass_prof_for_admin.html")
+    return render_template("ass_prof_for_admin.html",asst=asst,assts=assts)
 
 
 @app.route("/students_for_admin")
 def students_for_admin():
-    get_student_by_id()
-    get_asst_by_national_id()
-    return render_template("students_for_admin.html")
+    student_id=request.form['student_id']
+    students=Student.query.all()
+    student=Student.get_student_by_id(student)
+    return render_template("students_for_admin.html",student=student,students=students)
 
 
 if __name__ == "__main__":
