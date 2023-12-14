@@ -7,7 +7,7 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/ass_prof_for_admin.css') }}"
 />
-{% endblock style %} {% block content_of_admin_dashboard %} {% block search %}
+{% endblock style %} {% block search %}
 <form action="{{ url_for('ass_prof_for_admin') }}" method="get">
   <input
     placeholder="🔍 Search by Assistant ID ..."
@@ -18,7 +18,8 @@
   />
   <button type="submit">Search</button>
 </form>
-{% for asst in assts %}
+{% endblock search %} {% block content_of_admin_dashboard %} {% for asst in
+assts %}
 <div class="student-card">
   <h2 class="student-card-headline">
     Name: {{ asst.first_name }} {{ asst.middle_name }} {{ asst.last_name }}
@@ -26,4 +27,4 @@
   <p class="student-card-paragraph">ID Number: {{ asst.id }}</p>
   <p class="student-card-paragraph">{{ asst.contact_number }}</p>
 </div>
-{% endfor %} {% endblock search %} {% endblock content_of_admin_dashboard %}
+{% endfor %} {% endblock content_of_admin_dashboard %}

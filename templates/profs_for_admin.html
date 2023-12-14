@@ -7,7 +7,7 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/profs_for_admin.css') }}"
 />
-{% endblock style %} {% block content_of_admin_dashboard %} {% block search %}
+{% endblock style %} {% block search %}
 <form action="{{ url_for('profs_for_admin') }}" method="get">
   <input
     placeholder="🔍 Search by Professor ID ..."
@@ -18,7 +18,8 @@
   />
   <button type="submit">Search</button>
 </form>
-{% endblock search %} {% for prof in profs %}
+{% endblock search %} {% block content_of_admin_dashboard %} {% for prof in
+profs %}
 <div class="student-card">
   <h2 class="student-card-headline">
     Name: {{ prof.first_name }} {{ prof.middle_name }} {{ prof.last_name }}
