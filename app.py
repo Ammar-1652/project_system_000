@@ -8,7 +8,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Tables.db"
 app.config["SECRET_KEY"] = "your_secret_key"
 db.init_app(app)
 
-Acounts=["hi"]
+accounts=[]
 
 @app.route("/")
 def index():
@@ -63,22 +63,41 @@ def sign_up():
 @app.route("/sign_up_for_students", methods=["GET", "POST"])
 def sign_up_for_students():
     if request.method == "POST":
-        s = Student(
-            first_name=request.form["first-name"],
-            middle_name=request.form["middle-name"],
-            last_name=request.form["last-name"],
-            contact_number=request.form["contact-number"],
-            national_id=request.form["national-id"],
-            email=request.form["email"],
-            date_of_birth=request.form["date-of-birth"],
-            gender=request.form["gender"],
-            class_level=request.form["class_level"],
-            password=request.form["password"],
+        # s = Student(
+        #     first_name=request.form["first-name"],
+        #     middle_name=request.form["middle-name"],
+        #     last_name=request.form["last-name"],
+        #     contact_number=request.form["contact-number"],
+        #     national_id=request.form["national-id"],
+        #     email=request.form["email"],
+        #     date_of_birth=request.form["date-of-birth"],
+        #     gender=request.form["gender"],
+        #     class_level=request.form["class_level"],
+        #     password=request.form["password"],
+        # )
+        account = Student(
+            first_name=request.form.get("first-name"),
+            middle_name=request.form.get("middle-name"),
+            last_name=request.form.get("last-name"),
+            contact_number=request.form.get("contact-number"),
+            national_id=request.form.get("national-id"),
+            email=request.form.get("email"),
+            date_of_birth=request.form.get("date-of-birth"),
+            gender=request.form.get("gender"),
+            class_level=request.form.get("class_level"),
+            password=request.form.get("password"),
         )
+<<<<<<< HEAD
         db.session.add(s)
         Acounts.append(s)
+=======
+
+        
+        db.session.add(account)
+>>>>>>> 0bd65ac3eb53592e8202ff69bdf48671be8f0d57
         db.session.commit()
-    return render_template("sign_up_for_students.html")
+        accounts.append(account)
+    return render_template("sign_up_for_students.html",A)
 
 
 @app.route("/sign_up_for_ass_prof", methods=["GET", "POST"])
@@ -98,7 +117,7 @@ def sign_up_for_ass_prof():
         db.session.add(a)
         db.session.commit()
         return redirect(url_for("home"))
-    return render_template("sign_up_for_ass_prof.html")
+    return render_template("sign_up_for_ass_prof.html",accounts=accounts)
 
 
 @app.route("/sign_up_for_prof", methods=["GET", "POST"])
