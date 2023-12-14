@@ -12,7 +12,7 @@
   <h1>College Courses</h1>
 </header>
 
-<div class="container">
+<div class="courses-container">
   <!-- Course cards -->
   {% if course %} {% for one_course in course %}
   <a href="#" class="course-card">
@@ -31,14 +31,13 @@
       <!-- Add form elements for adding a new course -->
     </div>
   </a>
-</div>
-{% else %}
-<div class="container">
+  {% else %}
   <a href="#" class="add-course-link">
     <div class="add-course-card">
       <h2>Add a New Course</h2>
       <!-- Add form elements for adding a new course -->
     </div>
   </a>
+  {% endif %}
 </div>
-{% endif %} {% endblock content_of_admin_dashboard %}
+{% endblock content_of_admin_dashboard %}
