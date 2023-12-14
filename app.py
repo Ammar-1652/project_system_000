@@ -72,7 +72,6 @@ def log_in():
 def sign_up():
     return render_template("sign_up.html")
 
-
 @app.route("/sign_up_for_students", methods=["GET", "POST"])
 def sign_up_for_students():
     if request.method == "POST":
@@ -91,7 +90,10 @@ def sign_up_for_students():
 
         db.session.add(account)
         db.session.commit()
-        
+
+        flash("Sign_up successful\n Wait for verification", "success")
+        return redirect("log_in")  # Replace "your_redirect_route" with the appropriate route after successful signup.
+
     return render_template("sign_up_for_students.html")
 
 
@@ -113,6 +115,8 @@ def sign_up_for_ass_prof():
         db.session.add(account)
         db.session.commit()
         accounts.append(account)
+        flash("Sign_up successful\n Wait for verification", "success")
+        return redirect("log_in")
     return render_template("sign_up_for_ass_prof.html")
 
 
@@ -133,10 +137,11 @@ def sign_up_for_prof():
 
         db.session.add(account)
         db.session.commit()
+        flash("Sign_up successful\n Wait for verification", "success")
+        return redirect("log_in")
     return render_template("sign_up_for_prof.html")
 
 
-# ... (previous code)
 
 
 @app.route("/admin_dashboard", methods=["GET", "POST"])
