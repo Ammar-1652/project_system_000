@@ -1,10 +1,10 @@
 # logic.py
-
+from models import *
 # A dictionary to store the lectures and their teachers
-lectures = {"biology": "John", "geology": "John", "math": "Mark", "physics": "Mark"}
+lectures =Lecture.query.all()
 
 # A dictionary to store the students and their courses
-students = {"Alien": ["physics", "biology", "geology"], "Bob": ["physics", "math"]}
+students = Student.query.all()
 
 # A dictionary to store the attendance records for each lecture
 attendance = {}
