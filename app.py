@@ -250,9 +250,10 @@ def courses_for_admin():
         name = request.form.get('name')
         hours = request.form.get('hours')
         is_with_lab = request.form.get('is_with_lab')
+        course = Course.query.all()
 
-        add_course(name, hours, is_with_lab)
-    return render_template("courses_for_admin.html")
+        add_course(name, hours,is_with_lab)
+    return render_template("courses_for_admin.html",course=course)
 
 
 @app.route("/timetable_for_admin")
