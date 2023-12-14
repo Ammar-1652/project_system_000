@@ -125,6 +125,9 @@ class Course(db.Model):
     name = db.Column(db.String(100))
     hours = db.Column(db.Integer)
     is_with_lab=db.Column(db.Boolean)
+    day=db.Column(db.String(50),default=None)
+    hour=db.Column(db.Integer,default=None)
+    place=db.Column(db.Integer,default=None)
     
     
     professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'),default=None)
@@ -313,3 +316,4 @@ def add_course(name_,hours_,is_with_lab_):
     with app.app_context():
         db.session.add(course)
         db.session.commit()
+
