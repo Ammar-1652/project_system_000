@@ -41,18 +41,21 @@ def log_in():
         if student:
             session["user_id"] = student.id 
             if student.is_verified==True:
+                flash("Login successful" ,  "success")
                 return redirect(url_for("courses_for_student"))
         elif professor:
             session["user_id"] = professor.id
             if professor.is_verified==True:
+                flash("Login successful" ,  "success")
                 return redirect(url_for("courses_for_professor"))
-            return redirect("/professor_dashboard")
+            
 
         elif assistant:
             session["user_id"] = assistant.id
             if assistant.is_verified==True:
+                flash("Login successful" ,  "success")
                 return redirect(url_for("courses_for_assistant"))
-            return redirect("/assistant_dashboard")
+            
 
         elif admin:
             return redirect("/verification_for_admin")
@@ -286,7 +289,7 @@ def ass_prof_for_admin():
 
 @app.route("/students_for_admin")
 def students_for_admin():
-    student_id = request.args.get('student_id')
+    student_id = request.arges.get('student_id')
     students = Student.query.all()
     student = Student.get_student_by_id(student_id)
     return render_template("students_for_admin.html", student=student, students=students)
