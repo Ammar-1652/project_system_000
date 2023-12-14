@@ -1,4 +1,4 @@
-from models import *
+from models import  *
 from flask_sqlalchemy import SQLAlchemy
 from flask import current_app
 from datetime import datetime

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for,session
-from models import db, Student, Professor, Assistant, Course, Admin, student_course,Task,Enrollment
+from models import *
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime
@@ -222,15 +222,15 @@ def attendance_for_student():
 def professor_dashboard():
     professor_id = session.get("user_id")
     if professor_id is not None:
-        professor = get_professor_by_id(professor_id)
-    return render_template("professor_dashboard.html",professor=professor)
+        professor = get_prof_by_id(professor_id)
+    return render_template("prof_dashboard.html",professor=Professor)
 
 
 @app.route("/assistant_dashboard")
 def assistant_dashboard():
     assistant_id = session.get("user_id")
     if assistant_id is not None:
-        assistant = get_ass_by_id(student_id)
+        assistant = get_asst_by_id(assistant_id)
     return render_template("ass_professor_dashboard.html",assistant=assistant)
 
 
@@ -259,36 +259,67 @@ def professor_assignment():
         file.save(file_path)
 
         # Save task details to the database
-        task = Task(
-            professor_email=professor_email,
-            course_name=course_name,
-            task_description=task_description,
-            deadline=deadline,
-            file_path=file_path
-        )
-        db.session.add(task)
-        db.session.commit()
+        professor = Professor.query.filter_by(email=professor_email).first()
 
-        # Update enrollments (assuming the professor is enrolling all students in the course)
-        # Dummy data for enrollment, replace with your actual enrollment logic
-        enrollment = Enrollment(student_email="student@example.com", course_name=course_name)
-        db.session.add(enrollment)
-        db.session.commit()
+        # Check if the professor and course exist
+        if professor is not None:
+            course = Course.query.filter_by(name=course_name.upper()).first()
 
-        return redirect(url_for('professor_assignment'))
+            # Check if the course exists
+            if course is not None:
+                task = Assignment(
+                    title=task_description,
+                    description=task_description,
+                    file_url=file_path,
+                    dead_line_date=deadline,
+                    course_id=course.id,
+                    professor_id=professor.id
+                )
+
+                db.session.add(task)
+                db.session.commit()
+
+                # Update enrollments (assuming the professor is enrolling all students in the course)
+                # Dummy data for enrollment, replace with your actual enrollment logic
+                student = Student.query.filter_by(email="student@example.com").first()
+
+                if student is not None:
+                    enrollment = student_assignment.insert().values(
+                        student_id=student.id,
+                        assignment_id=task.id
+                    )
+                    db.session.execute(enrollment)
+                    db.session.commit()
+
+                    flash("Assignment added successfully.", "success")
+                    return redirect(url_for('professor_assignment'))
+
+                else:
+                    flash("Student not found.", "danger")
+            else:
+                flash("Course not found.", "danger")
+        else:
+            flash("Professor not found.", "danger")
 
     return render_template('professor_assignment.html')
 
 
-@app.route('/student_assignment')
-def student_assignment():
-    # Fetch tasks for the logged-in student (you need to implement the user authentication logic)
-    student_email = "student@example.com"  # Replace with the actual student email
-    student_tasks = Task.query.filter(Task.course_name.in_([enrollment.course_name for enrollment in Enrollment.query.filter_by(student_email=student_email)]))
+# Student assignment route
+@app.route("/assignment_for_student", methods=['GET', 'POST'], endpoint='assignment_for_student_view')
+def assignment_for_student():
+    student_id = session.get("user_id")
+    student = None  # Default value if student_id is None
 
-    return render_template('student_assignment.html', tasks=student_tasks)
+    if student_id is not None:
+        student = get_student_by_id(student_id)
+    else:
+        # Redirect to login if the user is not logged in
+        return redirect(url_for("log_in"))
 
-# ... (Other routes)
+    return render_template("assignment_for_student.html", student=student)
+
+
+
 
 if __name__ == "__main__":
     with app.app_context():

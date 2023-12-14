@@ -95,7 +95,7 @@ def sign_up_for_ass_prof():
         )
         db.session.add(a)
         db.session.commit()
-        return redirect(url_for("home"))
+        return redirect(url_for("index"))
     return render_template("sign_up_for_ass_prof.html")
 
 
@@ -115,7 +115,7 @@ def sign_up_for_prof():
         )
         db.session.add(p)
         db.session.commit()
-        return redirect(url_for("home"))
+        return redirect(url_for("index"))
     return render_template("sign_up_for_prof.html")
 
 
