@@ -36,7 +36,7 @@ def log_in():
         student = Student.query.filter_by(email=email, password=password).first()
         professor = Professor.query.filter_by(email=email, password=password).first()
         assistant = Assistant.query.filter_by(email=email, password=password).first()
-        admin = Admin.query.filter_by(email=email, password=password).first()
+        admin = Admin.query.filter_by(email="admin@gmail.com", password="admin").first()
 
         if student:
             session["user_id"] = student.id
@@ -48,7 +48,7 @@ def log_in():
             return redirect("/assistant_dashboard")
 
         elif admin:
-            return redirect("/admin_dashboard")
+            return redirect("/verification_for_admin")
 
         else:
             return "Invalid email or password"
@@ -95,7 +95,6 @@ def sign_up_for_ass_prof():
             email=request.form.get("email"),
             date_of_birth=request.form.get("date-of-birth"),
             gender=request.form.get("gender"),
-            class_level=request.form.get("class_level"),
             password=request.form.get("password"),
         )
 
@@ -117,7 +116,6 @@ def sign_up_for_prof():
             email=request.form.get("email"),
             date_of_birth=request.form.get("date-of-birth"),
             gender=request.form.get("gender"),
-            class_level=request.form.get("class_level"),
             password=request.form.get("password"),
         )
         
@@ -189,7 +187,7 @@ def professor_dashboard():
     professor_id = session.get("user_id")
     if professor_id is not None:
         professor = get_prof_by_id(professor_id)
-    return render_template("professor_dashboard.html", professor=Professor)
+    return render_template("prof_dashboard.html", professor=professor)
 
 
 @app.route("/assistant_dashboard")
