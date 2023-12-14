@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    .flash-message {
+      display: none;
+      max-width: 400px;
+      padding: 16px;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .flash-message.green {
+      border: 2px solid #4caf50;
+      background-color: #dff0d8;
+      color: #4caf50;
+    }
+
+    .flash-message.red {
+      border: 2px solid #d9534f;
+      background-color: #f2dede;
+      color: #d9534f;
+    }
+
+    .flash-message.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="flash-message green" id="flashMessageGreen">
+    This is a Green Flash Message!
+  </div>
+
+  <div class="flash-message red" id="flashMessageRed">
+    This is a Red Flash Message!
+  </div>
+
+  <script>
+    // Function to show the flash message
+    function showFlashMessage(color) {
+      // Hide all flash messages
+      document.querySelectorAll('.flash-message').forEach(function (message) {
+        message.classList.remove('show');
+      });
+
+      // Show the selected color flash message
+      var flashMessage = document.getElementById('flashMessage' + color);
+      flashMessage.classList.add('show');
+
+      // Hide the flash message after 3 seconds (adjust as needed)
+      setTimeout(function () {
+        flashMessage.classList.remove('show');
+      }, 3000);
+    }
+
+    // Call the function to show the flash messages
+    showFlashMessage('Red'); // Initial message (you can change to 'Red' as well)
+  </script>
+
+</body>
+</html>
