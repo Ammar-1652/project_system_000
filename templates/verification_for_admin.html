@@ -7,6 +7,19 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/verification_for_admin.css') }}"
 />
-{% endblock style %} {%block content_of_admin_dashboard %}
-<!--  -->
-{% endblock content_of_admin_dashboard %}
+{% endblock style %} {%block content_of_admin_dashboard %} {% for account in
+accounts %}
+<section>
+  <div class="card">
+    <h2>
+      User: {{ account.first_name }} + {{ account.middle_name }} + {{
+      account.last_name }}
+    </h2>
+    <p>Email: {{ account.email }}</p>
+    <p>Role: {{ account.role }}</p>
+    <p>ID: {{ account.id }}</p>
+    <button class="btn-approve">Approve</button>
+    <button class="btn-decline">Decline</button>
+  </div>
+</section>
+{% endfor %} {% endblock content_of_admin_dashboard %}
