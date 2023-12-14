@@ -264,11 +264,10 @@ def courses_for_admin():
         course_show = Course.query.all()
 
     if request.method == 'POST':
-        c=Course( hour=request.form.get('hour'),
-        day=request.form.get('day'))
+        c = Course(hour=request.form.get('hour'), day=request.form.get('day'))
         db.session.add(c)
-        db.commit()
-    return render_template("courses_for_admin.html",c=c , course_show=course_show)
+        db.session.commit()
+    return render_template("courses_for_admin.html", c=c, course_show=course_show)
 
 
 @app.route("/timetable_for_admin")
