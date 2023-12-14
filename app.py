@@ -201,7 +201,29 @@ def assistant_dashboard():
 @app.route("/verification_for_admin")
 def verification_for_admin():
     # Add logic to display student-specific data
-    return render_template("verification_for_admin.html" ,accounts=accounts)
+    accounts_verification=[]
+    students=get_students()
+    profs=get_profs()
+    assts=get_assts()
+    for student in students:
+        if student.is_verified==False:
+            accounts_verification.append(student)
+        else:
+            pass
+    for prof in profs:
+        if prof.is_verified==False:
+            accounts_verification.append(prof)
+        else:
+            pass
+        for asst in assts:
+            if asst.is_verified==False:
+                accounts_verification.append(asst)
+            else:
+                pass
+
+    
+    
+    return render_template("verification_for_admin.html" ,accounts_verification=accounts_verification)
 
 
 @app.route("/courses_for_admin")
