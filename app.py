@@ -58,9 +58,11 @@ def log_in():
             
 
         elif admin:
+            flash("Login successful" ,  "success")
             return redirect("/verification_for_admin")
 
         else:
+            flash("Login faild" ,  "danger")
             return "Invalid email or password"
 
     return render_template("log_in.html")
@@ -289,7 +291,7 @@ def ass_prof_for_admin():
 
 @app.route("/students_for_admin")
 def students_for_admin():
-    student_id = request.arges.get('student_id')
+    student_id = request.args.get('student_id')
     students = Student.query.all()
     student = Student.get_student_by_id(student_id)
     return render_template("students_for_admin.html", student=student, students=students)
