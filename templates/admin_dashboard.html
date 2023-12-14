@@ -13,7 +13,7 @@
     <div class="info-container">
       <div class="courses">
         <a
-          href="{{ url_for('courses_for_student') }}"
+          href="{{ url_for('courses_for_admin') }}"
           class="courses-link"
           onclick="openPopup()"
           id="info-course-container"
@@ -24,7 +24,7 @@
       </div>
       <div class="timetable">
         <a
-          href="{{ url_for('timetable_for_student') }}"
+          href="{{ url_for('timetable_for_admin') }}"
           class="timetable-link"
           onclick="openPopup()"
           id="info-timetable-container"
@@ -35,7 +35,7 @@
       </div>
       <div class="student-menu">
         <a
-          href="{{ url_for('assignment_for_student') }}"
+          href="{{ url_for('students_for_admin') }}"
           class="student-link"
           onclick="openPopup()"
           id="info-assignment-container"
@@ -46,7 +46,7 @@
       </div>
       <div class="prof">
         <a
-          href="{{ url_for('attendance_for_student') }}"
+          href="{{ url_for('profs_for_admin') }}"
           class="prof-link"
           onclick="openPopup()"
           id="info-prof-container"
@@ -58,7 +58,7 @@
 
       <div class="ass-prof">
         <a
-          href="{{ url_for('attendance_for_student') }}"
+          href="{{ url_for('ass_prof_for_admin') }}"
           class="ass-prof-link"
           onclick="openPopup()"
           id="info-ass-prof-container"
@@ -70,7 +70,7 @@
 
       <div class="verification">
         <a
-          href="{{ url_for('attendance_for_student') }}"
+          href="{{ url_for('verification_for_admin') }}"
           class="verification-link"
           onclick="openPopup()"
           id="info-verification-container"

@@ -8,6 +8,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Tables.db"
 app.config["SECRET_KEY"] = "your_secret_key"
 db.init_app(app)
 
+Acounts=[]
 
 @app.route("/")
 def index():
@@ -75,6 +76,7 @@ def sign_up_for_students():
             password=request.form["password"],
         )
         db.session.add(s)
+        Acounts.append(s)
         db.session.commit()
     return render_template("sign_up_for_students.html")
 
@@ -216,7 +218,7 @@ def assignment_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-    return render_template("assignment_for_student.html",student=student)
+    return render_template("assignment_for_student.html",student=Student)
 
 
 @app.route("/attendance_for_student")
@@ -242,7 +244,15 @@ def assistant_dashboard():
         assistant = get_asst_by_id(assistant_id)
     return render_template("ass_professor_dashboard.html",assistant=Assistant)
 
+@app.route("/verification_for_admin")
+def verification_for_admin():
+    # Add logic to display student-specific data
+    return render_template("verification_for_admin.html")
 
+@app.route("/courses_for_admin")
+def courses_for_admin():
+    # Add logic to display student-specific data
+    return render_template("courses_for_admin.html")
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
