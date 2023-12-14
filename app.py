@@ -279,7 +279,7 @@ def timetable_for_admin():
 
 @app.route("/profs_for_admin")
 def profs_for_admin():
-    prof_id=request.form['prof_id']
+    prof_id=request.args.get('prof_id')
     profs=Professor.query.all()
     prof=Professor.get_student_by_id(prof_id)
     return render_template("profs_for_admin.html",profs=profs ,prof=prof)
@@ -287,7 +287,7 @@ def profs_for_admin():
 
 @app.route("/ass_prof_for_admin")
 def ass_prof_for_admin():
-    asst_id=request.form['asst_id']
+    asst_id=request.args.get('asst_id')
     assts=Assistant.query.all()
     asst=Assistant.get_student_by_id(asst_id)
     # Add logic to display student-specific data
