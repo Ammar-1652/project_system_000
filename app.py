@@ -86,41 +86,45 @@ def sign_up_for_students():
 @app.route("/sign_up_for_ass_prof", methods=["GET", "POST"])
 def sign_up_for_ass_prof():
     if request.method == "POST":
-        a = Assistant(
-            first_name=request.form["first-name"],
-            middle_name=request.form["middle-name"],
-            last_name=request.form["last-name"],
-            contact_number=request.form["contact-number"],
-            national_id=request.form["national-id"],
-            email=request.form["email"],
-            date_of_birth=request.form["date-of-birth"],
-            gender=request.form["gender"],
-            password=request.form["password"],
+        account = Assistant(
+            first_name=request.form.get("first-name"),
+            middle_name=request.form.get("middle-name"),
+            last_name=request.form.get("last-name"),
+            contact_number=request.form.get("contact-number"),
+            national_id=request.form.get("national-id"),
+            email=request.form.get("email"),
+            date_of_birth=request.form.get("date-of-birth"),
+            gender=request.form.get("gender"),
+            class_level=request.form.get("class_level"),
+            password=request.form.get("password"),
         )
-        db.session.add(a)
+
+        db.session.add(account)
         db.session.commit()
-        return redirect(url_for("home"))
+        accounts.append(account)
     return render_template("sign_up_for_ass_prof.html", accounts=accounts)
 
 
 @app.route("/sign_up_for_prof", methods=["GET", "POST"])
 def sign_up_for_prof():
     if request.method == "POST":
-        p = Professor(
-            first_name=request.form["first-name"],
-            middle_name=request.form["middle-name"],
-            last_name=request.form["last-name"],
-            contact_number=request.form["contact-number"],
-            national_id=request.form["national-id"],
-            email=request.form["email"],
-            date_of_birth=request.form["date-of-birth"],
-            gender=request.form["gender"],
-            password=request.form["password"],
+        account = Professor(
+            first_name=request.form.get("first-name"),
+            middle_name=request.form.get("middle-name"),
+            last_name=request.form.get("last-name"),
+            contact_number=request.form.get("contact-number"),
+            national_id=request.form.get("national-id"),
+            email=request.form.get("email"),
+            date_of_birth=request.form.get("date-of-birth"),
+            gender=request.form.get("gender"),
+            class_level=request.form.get("class_level"),
+            password=request.form.get("password"),
         )
-        db.session.add(p)
+        
+        db.session.add(account)
         db.session.commit()
-        return redirect(url_for("home"))
-    return render_template("sign_up_for_prof.html")
+        accounts.append(account)
+    return render_template("sign_up_for_prof.html",accounts=accounts)
 
 
 # ... (previous code)
@@ -129,61 +133,8 @@ def sign_up_for_prof():
 @app.route("/admin_dashboard", methods=["GET", "POST"])
 def admin_dashboard():
     if request.method == "POST":
-        action = request.form.get("action")
-        user_id = request.form.get("user_id")
 
-        if action == "verify":
-            user = None
-            for model in [Student, Professor, Assistant]:
-                user = model.query.get(user_id)
-                if user:
-                    break
-
-            if user:
-                user.verified = True
-                db.session.commit()
-                flash("User verified successfully.", "success")
-            else:
-                flash("User not found.", "danger")
-
-        elif action == "reject":
-            user = None
-            for model in [Student, Professor, Assistant]:
-                user = model.query.get(user_id)
-                if user:
-                    break
-
-            if user:
-                db.session.delete(user)
-                db.session.commit()
-                flash("User rejected and deleted.", "success")
-            else:
-                flash("User not found.", "danger")
-
-        elif action == "add_course":
-            course_name = request.form.get("course_name")
-            hours = request.form.get("course_hours")
-
-            new_course = Course(
-                name=course_name,
-                hours=hours,
-            )
-            db.session.add(new_course)
-            db.session.commit()
-            flash("Course added successfully.", "success")
-
-    unverified_students = Student.query.filter_by(is_verified=False).all()
-    unverified_professors = Professor.query.filter_by(is_verified=False).all()
-    unverified_assistants = Assistant.query.filter_by(is_verified=False).all()
-
-    return render_template(
-        "admin_dashboard.html",
-        unverified_students=unverified_students,
-        unverified_professors=unverified_professors,
-        unverified_assistants=unverified_assistants,
-        accounts=accounts,
-        admin=Admin,
-    )
+        render_template ("admin_dashboard.html") 
 
 
 @app.route("/student_dashboard")
@@ -252,7 +203,7 @@ def assistant_dashboard():
 @app.route("/verification_for_admin")
 def verification_for_admin():
     # Add logic to display student-specific data
-    return render_template("verification_for_admin.html")
+    return render_template("verification_for_admin.html" ,accounts=accounts)
 
 
 @app.route("/courses_for_admin")
