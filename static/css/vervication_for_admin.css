@@ -1,0 +1,40 @@
+section {
+  padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 1em;
+  padding: 1em;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  color: #333;
+}
+
+.btn-approve,
+.btn-decline {
+  padding: 8px 12px;
+  margin-top: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-approve {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+}
+
+.btn-decline {
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+}
