@@ -241,7 +241,12 @@ def verification_for_admin():
 
 @app.route("/courses_for_admin")
 def courses_for_admin():
-    # Add logic to display student-specific data
+    if request.method == 'POST':
+        name = request.form.get('name')
+        hours = request.form.get('hours')
+        is_with_lab = request.form.get('is_with_lab')
+
+        add_course(name, hours, is_with_lab)
     return render_template("courses_for_admin.html")
 
 
