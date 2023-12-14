@@ -118,11 +118,11 @@ def sign_up_for_prof():
             gender=request.form.get("gender"),
             password=request.form.get("password"),
         )
-        
+
         db.session.add(account)
         db.session.commit()
         accounts.append(account)
-    return render_template("sign_up_for_prof.html",accounts=accounts)
+    return render_template("sign_up_for_prof.html", accounts=accounts)
 
 
 # ... (previous code)
@@ -131,8 +131,7 @@ def sign_up_for_prof():
 @app.route("/admin_dashboard", methods=["GET", "POST"])
 def admin_dashboard():
     if request.method == "POST":
-
-        render_template ("admin_dashboard.html") 
+        render_template("admin_dashboard.html")
 
 
 @app.route("/student_dashboard")
@@ -200,8 +199,9 @@ def assistant_dashboard():
 
 @app.route("/verification_for_admin")
 def verification_for_admin():
+    global accounts
     # Add logic to display student-specific data
-    return render_template("verification_for_admin.html" ,accounts=accounts)
+    return render_template("verification_for_admin.html", accounts=accounts)
 
 
 @app.route("/courses_for_admin")
