@@ -1,13 +1,13 @@
 # app.py
 from flask import Flask, render_template, request
-from logic import open_attendance, close_attendance, sign_attendance, view_teacher_records, view_student_records
+from attendance_logic import*
 
 app = Flask(__name__)
 
 # A function to render the homepage
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('attendance.html')
 
 # A function to handle teacher actions
 @app.route('/teacher', methods=['GET', 'POST'])

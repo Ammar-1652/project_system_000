@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session,flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from datetime import datetime
 from models import *
 
@@ -8,7 +8,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Tables.db"
 app.config["SECRET_KEY"] = "your_secret_key"
 db.init_app(app)
 
-accounts=[]
+accounts = []
+
 
 @app.route("/")
 def index():
@@ -88,11 +89,10 @@ def sign_up_for_students():
             password=request.form.get("password"),
         )
 
-        
         db.session.add(account)
         db.session.commit()
         accounts.append(account)
-    return render_template("sign_up_for_students.html",A)
+    return render_template("sign_up_for_students.html", accounts=accounts)
 
 
 @app.route("/sign_up_for_ass_prof", methods=["GET", "POST"])
@@ -112,7 +112,7 @@ def sign_up_for_ass_prof():
         db.session.add(a)
         db.session.commit()
         return redirect(url_for("home"))
-    return render_template("sign_up_for_ass_prof.html",accounts=accounts)
+    return render_template("sign_up_for_ass_prof.html", accounts=accounts)
 
 
 @app.route("/sign_up_for_prof", methods=["GET", "POST"])
@@ -136,6 +136,7 @@ def sign_up_for_prof():
 
 
 # ... (previous code)
+
 
 @app.route("/admin_dashboard", methods=["GET", "POST"])
 def admin_dashboard():
@@ -173,7 +174,7 @@ def admin_dashboard():
 
         elif action == "add_course":
             course_name = request.form.get("course_name")
-            hours=request.form.get("course_hours")
+            hours = request.form.get("course_hours")
 
             new_course = Course(
                 name=course_name,
@@ -197,7 +198,7 @@ def admin_dashboard():
         professor=Professor,
         assistant=Assistant,
         admin=Admin,
-        courses=courses
+        courses=courses,
     )
 
 
@@ -213,7 +214,9 @@ def courses_for_student():
     if student_id is not None:
         student = get_student_by_id(student_id)
 
-    return render_template("courses_for_student.html", student=Student,admin=Admin,courses=Course)
+    return render_template(
+        "courses_for_student.html", student=Student, admin=Admin, courses=Course
+    )
 
     # Redirect to login if the user is not logged in
     return redirect(url_for("log_in"))
@@ -224,7 +227,7 @@ def timetable_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-    return render_template("timetable_for_student.html",student=student)
+    return render_template("timetable_for_student.html", student=student)
 
 
 @app.route("/assignment_for_student")
@@ -232,7 +235,7 @@ def assignment_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-    return render_template("assignment_for_student.html",student=Student)
+    return render_template("assignment_for_student.html", student=Student)
 
 
 @app.route("/attendance_for_student")
@@ -240,7 +243,7 @@ def attendance_for_student():
     student_id = session.get("user_id")
     if student_id is not None:
         student = get_student_by_id(student_id)
-    return render_template("attendance_for_student.html",student=Student)
+    return render_template("attendance_for_student.html", student=Student)
 
 
 @app.route("/professor_dashboard")
@@ -248,7 +251,7 @@ def professor_dashboard():
     professor_id = session.get("user_id")
     if professor_id is not None:
         professor = get_prof_by_id(professor_id)
-    return render_template("professor_dashboard.html",professor=Professor)
+    return render_template("professor_dashboard.html", professor=Professor)
 
 
 @app.route("/assistant_dashboard")
@@ -256,17 +259,21 @@ def assistant_dashboard():
     assistant_id = session.get("user_id")
     if assistant_id is not None:
         assistant = get_asst_by_id(assistant_id)
-    return render_template("ass_professor_dashboard.html",assistant=Assistant)
+    return render_template("ass_professor_dashboard.html", assistant=Assistant)
+
 
 @app.route("/verification_for_admin")
 def verification_for_admin():
     # Add logic to display student-specific data
     return render_template("verification_for_admin.html")
 
+
 @app.route("/courses_for_admin")
 def courses_for_admin():
     # Add logic to display student-specific data
     return render_template("courses_for_admin.html")
+
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
