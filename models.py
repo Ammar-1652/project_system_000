@@ -75,6 +75,7 @@ class Student(db.Model):
     gender = db.Column(db.String(10))
     class_level = db.Column(db.String(10))
     password = db.Column(db.String(100))  
+    role=db.Column(db.String,default="student")
     is_verified=db.Column(db.Boolean,default=False)
     
     assignments = db.relationship('Assignment', secondary='student_assignment', back_populates='students')
@@ -94,6 +95,8 @@ class Professor(db.Model):
     date_of_birth = db.Column(db.String(10))
     gender = db.Column(db.String(10))
     password = db.Column(db.String(100))
+    role=db.Column(db.String,default="professor")
+
     is_verified=db.Column(db.Boolean,default=False)
     
     assignments = db.relationship('Assignment', backref='professor')
@@ -111,6 +114,7 @@ class Assistant(db.Model):
     date_of_birth = db.Column(db.String(10))
     gender = db.Column(db.String(10))
     password = db.Column(db.String(100))
+    role=db.Column(db.String,default="assistant")
     is_verified=db.Column(db.Boolean,default=False)
     
 
