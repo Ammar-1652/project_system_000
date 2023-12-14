@@ -273,7 +273,7 @@ def profs_for_admin():
     prof_id=request.form['prof_id']
     profs=Professor.query.all()
     prof=Professor.get_student_by_id(prof_id)
-    return render_template("profs_for_admin.html",)
+    return render_template("profs_for_admin.html",profs=profs ,prof=prof)
 
 
 @app.route("/ass_prof_for_admin")
