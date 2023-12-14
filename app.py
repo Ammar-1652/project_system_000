@@ -89,9 +89,9 @@ def sign_up_for_students():
             password=request.form.get("password"),
         )
 
-        db.session.add(accounts)
+        db.session.add(account)
         db.session.commit()
-        accounts.append(accounts)
+        accounts.append(account)
     return render_template("sign_up_for_students.html", accounts=accounts)
 
 
