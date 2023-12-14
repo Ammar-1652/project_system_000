@@ -22,22 +22,18 @@
         <p>ID: {{ account.id }}</p>
       </div>
       <div class="buttons">
-        <button
-          class="btn-approve"
-          type="submit"
-          name="action"
-          value="verify_{{ account.id }}"
-        >
-          Approve
-        </button>
-        <button
-          class="btn-decline"
-          type="submit"
-          name="action"
-          value="reject_{{ account.id }}"
-        >
-          Decline
-        </button>
+        <!-- Inside your loop that displays accounts_verification -->
+        <form method="post" action="{{ url_for('verification_for_admin') }}">
+          <input type="hidden" name="account_id" value="{{ account.id }}" />
+          <input type="hidden" name="action" value="verify" />
+          <button type="submit">Verify</button>
+        </form>
+
+        <form method="post" action="{{ url_for('verification_for_admin') }}">
+          <input type="hidden" name="account_id" value="{{ account.id }}" />
+          <input type="hidden" name="action" value="reject" />
+          <button type="submit">Reject</button>
+        </form>
       </div>
     </div>
     {% endfor %}
