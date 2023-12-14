@@ -250,9 +250,15 @@ def courses_for_admin():
         name = request.form.get('name')
         hours = request.form.get('hours')
         is_with_lab = request.form.get('is_with_lab')
-        course = Course.query.all()
-
+        course_show = Course.query.all()
         add_course(name, hours,is_with_lab)
+        course_show = Course.query.all()
+
+    if request.method == 'POST':
+        c=Course( hour=request.form.get('hour'),
+        day=request.form.get('day'))
+        db.session.add(c)
+        db.commit()
     return render_template("courses_for_admin.html",course=course)
 
 
