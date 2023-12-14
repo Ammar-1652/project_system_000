@@ -259,7 +259,7 @@ def courses_for_admin():
         day=request.form.get('day'))
         db.session.add(c)
         db.commit()
-    return render_template("courses_for_admin.html",course=course)
+    return render_template("courses_for_admin.html",course=course , course_show=course_show)
 
 
 @app.route("/timetable_for_admin")
