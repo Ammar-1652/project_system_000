@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask import current_app
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -14,10 +15,6 @@ student_assignment=db.Table("student_assignment",
     db.Column("assignment_id",db.Integer, db.ForeignKey('assignment.id'),primary_key=True)
 
 )
-class StudentAssignment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
-    assignment_id = db.Column(db.Integer, db.ForeignKey('assignment.id'))
 
 class Assignment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -83,7 +80,6 @@ class Assistant(db.Model):
     password = db.Column(db.String(100))
     is_verified=db.Column(db.Boolean,default=False)
     
-    assignments = db.relationship('Assignment', backref='assistant')
 
     labs = db.relationship("Course", backref="assistant")
 
@@ -93,8 +89,8 @@ class Course(db.Model):
     hours = db.Column(db.Integer)
     
     
-    professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'))
-    assistant_id = db.Column(db.Integer, db.ForeignKey('assistant.id'))
+    professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'),default=None)
+    assistant_id = db.Column(db.Integer, db.ForeignKey('assistant.id'),default=None)
     assignments = db.relationship('Assignment', backref='course')
 
 
