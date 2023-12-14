@@ -30,9 +30,7 @@ class Lecture(db.Model):
     start_time = db.Column(db.DateTime)
     end_time = db.Column(db.DateTime)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
-    professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'))
-    assistant_id = db.Column(db.Integer, db.ForeignKey('assistant.id'))
-
+    # professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'))
     # Relationships
     students_attendance = db.relationship('Student', secondary='student_attendance', back_populates='lectures_attendance')
 class Assignment(db.Model):
