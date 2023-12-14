@@ -1,33 +1,31 @@
-# app.py
+# attendance.py
+
 from flask import Flask, render_template, request
-from attendance_logic import*
+from attendance_logic import *
 
 app = Flask(__name__)
 
-# A function to render the homepage
 @app.route('/')
 def home():
     return render_template('attendance.html')
 
-# A function to handle teacher actions
-@app.route('/teacher', methods=['GET', 'POST'])
-def teacher():
+@app.route('/professor', methods=['GET', 'POST'])
+def professor():
     if request.method == 'POST':
-        teacher_name = request.form['teacher_name']
+        professor_name = request.form['professor_name']
         action = request.form['action']
 
         if action == 'open':
-            lecture = request.form['lecture']
-            open_attendance(lecture)
+            lecture_title = request.form['lecture']
+            open_attendance(lecture_title)
         elif action == 'close':
-            lecture = request.form['lecture']
-            close_attendance(lecture)
+            lecture_title = request.form['lecture']
+            close_attendance(lecture_title)
         elif action == 'view':
-            return render_template('teacher_records.html', teacher_name=teacher_name, records=view_teacher_records(teacher_name))
+            return render_template('professor_records.html', professor_name=professor_name, records=view_professor_records(professor_name))
 
-    return render_template('teacher.html')
+    return render_template('professor.html')
 
-# A function to handle student actions
 @app.route('/student', methods=['GET', 'POST'])
 def student():
     if request.method == 'POST':
@@ -35,8 +33,8 @@ def student():
         action = request.form['action']
 
         if action == 'sign':
-            lecture = request.form['lecture']
-            sign_attendance(student_name, lecture)
+            lecture_title = request.form['lecture']
+            sign_attendance(student_name, lecture_title)
         elif action == 'view':
             return render_template('student_records.html', student_name=student_name, records=view_student_records(student_name))
 
