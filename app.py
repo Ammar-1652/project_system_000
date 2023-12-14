@@ -146,7 +146,6 @@ def student_dashboard():
     return render_template("student_dashboard.html", accounts=accounts)
 
 
-app.route("/courses_for_student")
 
 
 @app.route("/courses_for_student")
