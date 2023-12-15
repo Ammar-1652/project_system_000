@@ -186,6 +186,7 @@ button {
 /* Optional: Add some styling for placeholder text */
 input::placeholder {
   color: #999;
+  font-size: 15px;
 }
 
 /* End Content */

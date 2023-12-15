@@ -133,6 +133,34 @@ nav .links a:hover::before {
 }
 /* End Navbar */
 
+/* Start Flash */
+
+.alert {
+  width: 100%;
+  background-color: #28a745;
+  padding: 10px;
+}
+
+.success {
+  width: 100%;
+  background-color: #28a745;
+  padding: 10px;
+}
+
+.danger {
+  width: 100%;
+  background-color: #dc3545;
+  padding: 10px;
+}
+
+.alert .message {
+  text-align: center;
+  padding: 10px;
+  color: #ffffff;
+}
+
+/* End Flash */
+
 /* Start Footer */
 .footer-container {
   position: relative;

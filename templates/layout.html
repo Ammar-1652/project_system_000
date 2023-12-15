@@ -70,15 +70,15 @@
     <!-- End Navbar -->
 
     <!-- Start Flash Messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert">
-      {{ message }}
-    </div>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message, category in messages %}
+      <div class="{% if category == 'success' %}success{% elif category == 'danger' %}danger{% endif %}">
+        {{ message }}
+      </div>
     {% endfor %}
-    {% endif %}
-    {% endwith %}
+  {% endif %}
+{% endwith %}
     <!-- End Flash Messages -->
 
     {% block content %} {% endblock content %}

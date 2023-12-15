@@ -14,7 +14,8 @@
       {
         "ignore": [
           "width: fit-content",
-          "height: fit-content"
+          "height: fit-content",
+          "min-height: fit-content"
         ]
       }
     ],
